@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit(contactFormRef)" #contactFormRef="ngForm">
+  <div style="display: inline-grid ">
+  <label for="name">Nazwa użytkownika</label>
+  <input type="text" id="userName" name="userName" [(ngModel)]="registerDto.userDto.name">
+
+      <label for="name">Nazwa wyświetlana</label>
+      <input type="text" id="userName" name="userName" [(ngModel)]="registerDto.userDto.displayName">
+
+
+      <label for="birthDate">Data urodzin</label>
+      <input class="form-control" placeholder="yyyy-mm-dd"
+             name="dp" [(ngModel)]="registerDto.birthDate" ngbDatepicker #d="ngbDatepicker">
+             <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                Wybierz
+              </button>
+            </div>
+      <!-- <input [matDatepicker]="myDatepicker" name="birthDate" [(ngModel)]="registerDto.userDto.birthDate">
+      <mat-datepicker #myDatepicker></mat-datepicker> -->
+
+
+
+      <label for="gender">Płeć</label>
+      <input type="text" id="gender" name="gender" [(ngModel)]="registerDto.userDto.gender">
+
+      <label for="password">Hasło</label>
+      <input type="text" id="password" name="password" [(ngModel)]="registerDto.password">
+
+  <button type="submit">Zarejestruj</button>
+</div>
+</form>
