@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiQueryService } from '../external/api-query-serive.service';
+import { ApiQueryService } from '../external/api-query.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserCreateDto } from './UserDto';
-import { AuthenticationQueryService } from '../external/authentication-query-service.service';
+import { AuthenticationQueryService } from '../external/authentication-query.service';
 import { RegisterDto } from '../external/ApiAuthDto';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -49,26 +49,4 @@ export class UsersService {
       }
     });
    }
-
-
-  CreateUser2(dto: UserCreateDto) {
-    const endpoint = ApiQueryService.ApiEndpoint + this.postUserEndpoint;
-    let result: any;
-
-    let d = new Date(dto.birthDate.year, dto.birthDate.month - 1, dto.birthDate.day);
-    dto.userDto.birthDate = d.toJSON();
-    const password = dto.password;
-    return this.client.post(endpoint, dto.userDto).pipe(map(x =>
-    {
-      result = x;
-      const registerDto: RegisterDto = {Password: password, UserId: result};
-      const registerResult = this.authService.RegisterUser(registerDto).pipe(map(
-      (res => {
-          return res;
-         }
-      )));
-      return registerResult;
-    }),
-    );
-  }
 }

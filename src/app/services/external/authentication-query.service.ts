@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RegisterDto, ApiAuthDto } from './ApiAuthDto';
-import { ApiQueryService } from './api-query-serive.service';
+import { ApiQueryService } from './api-query.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class AuthenticationQueryService {
   constructor(private client: HttpClient) { }
 
   RegisterUser(dto: RegisterDto): Observable<boolean> {
-    let isSuccess: boolean = false;
+    let isSuccess = false;
     const endpoint = ApiQueryService.ApiEndpoint + this.registerEndpoint;
     return this.client.post(endpoint, dto, {observe: 'response'})
     .pipe(map(response => {
