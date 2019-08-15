@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UsersService } from '../services/users/users.service';
 import { UserCreateDto } from '../services/users/UserDto';
+import { take, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-registration',
@@ -11,6 +12,7 @@ import { UserCreateDto } from '../services/users/UserDto';
 export class UserRegistrationComponent implements OnInit {
 
   registerDto: UserCreateDto;
+  userRegistrationFailed = false;
 
   constructor(private usersService: UsersService) {
     this.registerDto = {
@@ -23,7 +25,22 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   onSubmit(contactFormRef: NgForm) {
-    this.usersService.CreateUser(this.registerDto);
+    const queryResult = this.usersService.CreateUser(this.registerDto)
+    .subscribe(result => {
+      if (result.isSuccess) {
+        this.userRegistered(contactFormRef);
+        this.userRegistrationFailed = false;
+        // redirect to login
+        } else {
+            this.userRegistrationFailed = true;
+          }
+    }, (error) => {
+      console.log(error);
+      this.userRegistrationFailed = true;
+    });
+  }
+
+  userRegistered(contactFormRef: NgForm) {
     contactFormRef.reset();
   }
 }

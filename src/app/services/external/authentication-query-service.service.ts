@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { RegisterDto, ApiAuthDto } from './ApiAuthDto';
 import { ApiQueryService } from './api-query-serive.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { map } from "rxjs/operators";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +16,14 @@ export class AuthenticationQueryService {
 
   constructor(private client: HttpClient) { }
 
-  RegisterUser(dto: RegisterDto) {
-  const endpoint = ApiQueryService.ApiEndpoint + this.registerEndpoint;
-  this.client.post(endpoint, dto).subscribe();
+  RegisterUser(dto: RegisterDto): Observable<boolean> {
+    let isSuccess: boolean = false;
+    const endpoint = ApiQueryService.ApiEndpoint + this.registerEndpoint;
+    return this.client.post(endpoint, dto, {observe: 'response'})
+    .pipe(map(response => {
+      isSuccess = response.status === 200;
+      return isSuccess;
+    }));
   }
 
   LoginUser(dto: ApiAuthDto): string {
