@@ -19,13 +19,12 @@
                 Wybierz
               </button>
             </div>
-      <!-- <input [matDatepicker]="myDatepicker" name="birthDate" [(ngModel)]="registerDto.userDto.birthDate">
-      <mat-datepicker #myDatepicker></mat-datepicker> -->
-
-
 
       <label for="gender">Płeć</label>
-      <input type="text" id="gender" name="gender" [(ngModel)]="registerDto.userDto.gender">
+      <select [(ngModel)]="registerDto.userDto.gender" type="text" id="gender" name="gender">
+        <option value="m">Mężczyzna</option>
+        <option value="f">Kobieta</option>
+      </select>
 
       <label for="password">Hasło</label>
       <input type="text" id="password" name="password" [(ngModel)]="registerDto.password">
