@@ -8,10 +8,12 @@ import { MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import { AppRoutingModule } from './app.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

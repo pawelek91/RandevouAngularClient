@@ -26,14 +26,12 @@ export class AuthenticationQueryService {
     }));
   }
 
-  LoginUser(dto: ApiAuthDto): string {
+  LoginUser(dto: ApiAuthDto): Observable<string> {
     const endpoint = ApiQueryService.ApiEndpoint + this.loginEndpotint;
-    let response: string;
-
-    this.client.post<string>(endpoint, {body: dto}).subscribe (result =>
-      response = result
-      );
-    return response;
+    return this.client.post<string>(endpoint, dto, {responseType: 'text' as 'json'}).pipe(map((result =>{
+      return result;
+      }
+      )));
   }
 
   // GetIdentity(apiKey: string): number{

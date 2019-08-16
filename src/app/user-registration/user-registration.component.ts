@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UsersService } from '../services/users/users.service';
+import { UsersAuthService } from '../services/users/usersAuth.service';
 import { UserCreateDto } from '../services/users/UserDto';
 import { take, catchError } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ export class UserRegistrationComponent implements OnInit {
   registerDto: UserCreateDto;
   userRegistrationFailed = false;
 
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersAuthService) {
     this.registerDto = {
     };
     this.registerDto.userDto = { };
