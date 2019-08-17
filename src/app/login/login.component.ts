@@ -21,16 +21,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(registerFormRef: NgForm) {
+  onSubmit(loginFormRef: NgForm) {
       this.usersService.LoginUser(this.login, this.password).subscribe(result => {
       this.logged = true;
 
-      registerFormRef.resetForm();
-
-
-      //set cookie auth:result...
-      sessionStorage.setItem('','');
-
+      loginFormRef.resetForm();
     }, (error) => {
       this.loginFailed = true;
       console.log(error);

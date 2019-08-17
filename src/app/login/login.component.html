@@ -9,7 +9,7 @@
 <ng-container *ngIf="!logged">
 
 
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit(loginFormRef)" #loginFormRef="ngForm">
   <div style="display: inline-grid ">
     <label for="name">Nazwa użytkownika</label>
     <input type="text" id="userName" name="userName" [(ngModel)]="login">

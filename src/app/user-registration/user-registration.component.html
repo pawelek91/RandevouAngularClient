@@ -2,7 +2,7 @@
   Nie udało się zarejestrować użyszkodnika
 </ng-container>
 
-<form (ngSubmit)="onSubmit(contactFormRef)" #contactFormRef="ngForm">
+<form (ngSubmit)="onSubmit(registerFormRef)" #registerFormRef="ngForm">
   <div style="display: inline-grid ">
   <label for="name">Nazwa użytkownika</label>
   <input type="text" id="userName" name="userName" [(ngModel)]="registerDto.userDto.name">
