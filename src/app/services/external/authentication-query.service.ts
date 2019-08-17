@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RegisterDto, ApiAuthDto } from './ApiAuthDto';
 import { ApiQueryService } from './api-query.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,7 @@ export class AuthenticationQueryService {
 
   loginEndpotint = '/api/Login/Login';
   registerEndpoint = '/api/login/Register';
-  identityEndpoint = 'api/login/Identity';
+  identityEndpoint = '/api/login/Identity';
 
   constructor(private client: HttpClient) { }
 
@@ -34,7 +34,10 @@ export class AuthenticationQueryService {
       )));
   }
 
-  // GetIdentity(apiKey: string): number{
+  GetIdentity(apiKey: string, addHeaders: HttpHeaders): Observable<number> {
+    const endpoint = ApiQueryService.ApiEndpoint + this.identityEndpoint;
+    return this.client.get<number>(endpoint, {headers: addHeaders});
+  }
 
-  // }
+
 }

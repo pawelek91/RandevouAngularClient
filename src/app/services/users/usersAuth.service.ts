@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiQueryService } from '../external/api-query.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { UserCreateDto } from './UserDto';
 import { AuthenticationQueryService } from '../external/authentication-query.service';
 import { RegisterDto, ApiAuthDto } from '../external/ApiAuthDto';
@@ -14,6 +14,7 @@ import { QueryResult } from 'src/app/common/QueryResult';
 export class UsersAuthService {
 
   postUserEndpoint: '/api/Users';
+
   constructor(private client: HttpClient, private authService: AuthenticationQueryService) {
     this.postUserEndpoint  = '/api/Users';
    }
@@ -52,16 +53,41 @@ export class UsersAuthService {
 
    LoginUser(userName: string, password: string) {
      const dto: ApiAuthDto = {UserName: userName, Password: password};
-     return this.authService.LoginUser(dto,).pipe(map(result => {
+     return this.authService.LoginUser(dto).pipe(map(result => {
       const queryResult = new QueryResult();
-      const cookieHeader = result;
+
       if (result.length > 0) {
         queryResult.isSuccess = true;
+        this.GetIdentity(result).subscribe(resultId => {
+          const userIdentity = resultId;
+          localStorage.setItem('RANDEVOU_APIKEY', result);
+          localStorage.setItem('RANDEVOU_IDENTITY', userIdentity.toString());
+        });
       } else {
         queryResult.isSuccess = false;
         queryResult.message = 'Nie udało się zalogować';
       }
       return queryResult;
      }));
+  }
+
+  LogoutUser() {
+    localStorage.removeItem('RANDEVOU_APIKEY');
+    localStorage.removeItem('RANDEVOU_IDENTITY');
+  }
+
+  GetIdentity(apiKey: string) {
+
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', apiKey);
+    this.CreateAuth(apiKey, headers);
+
+    return this.authService.GetIdentity(apiKey, headers).pipe(map(result => {
+      return result;
+    }));
+  }
+
+  CreateAuth(apiKey: string, headers: HttpHeaders) {
+    headers = headers.append('Authorization', apiKey);
   }
 }

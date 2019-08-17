@@ -1,17 +1,23 @@
 <ng-container *ngIf="loginFailed">
   Nie udało się zalogować
-</ng-container>>
+</ng-container>
+
+<ng-container *ngIf="logged">
+<button (click)="logout()">Wyloguj</button>
+</ng-container>
+
+<ng-container *ngIf="!logged">
+
 
 <form (ngSubmit)="onSubmit()">
   <div style="display: inline-grid ">
     <label for="name">Nazwa użytkownika</label>
     <input type="text" id="userName" name="userName" [(ngModel)]="login">
-  </div>
 
-  <div style="display: inline-grid ">
-    <label for="name">Nazwa użytkownika</label>
+    <label for="name">Hasło</label>
     <input type="password" id="password" name="password" [(ngModel)]="password">
-  </div>
 
   <button type="submit">Zaloguj</button>
+</div>
 </form>
+</ng-container>

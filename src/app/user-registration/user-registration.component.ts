@@ -24,11 +24,11 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(contactFormRef: NgForm) {
+  onSubmit(registerFormRef: NgForm) {
     const queryResult = this.usersService.CreateUser(this.registerDto)
     .subscribe(result => {
       if (result.isSuccess) {
-        this.userRegistered(contactFormRef);
+        this.userRegistered(registerFormRef);
         this.userRegistrationFailed = false;
         // redirect to login
         } else {
@@ -43,4 +43,6 @@ export class UserRegistrationComponent implements OnInit {
   userRegistered(contactFormRef: NgForm) {
     contactFormRef.reset();
   }
+
+
 }
