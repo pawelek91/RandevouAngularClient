@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserDto, UserFullDto } from '../services/users/UserDto';
 import { UsersService } from '../services/UsersService';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-my-profile',
@@ -12,7 +13,7 @@ export class MyProfileComponent implements OnInit {
 
   userDto: UserFullDto;
   newPassword: string;
-  newBirthDate: Date;
+  newBirthDate: NgbDate;
 
   constructor(private usersService: UsersService) {
     this.userDto = {
@@ -21,6 +22,10 @@ export class MyProfileComponent implements OnInit {
     };
     this.usersService.GetUserBasic().subscribe(result => {
       this.userDto.basic = result;
+      const date = new Date(this.userDto.basic.birthDate);
+
+      this.newBirthDate = new NgbDate(date.getFullYear(),date.getMonth(),date.getDay() );
+
     }, (error) => {
       console.log(error);
     });

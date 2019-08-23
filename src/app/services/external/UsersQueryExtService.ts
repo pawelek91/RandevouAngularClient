@@ -18,7 +18,7 @@ export class UsersQueryExternalService extends ApiQueryService {
   private DeleteUserEnd = this.UsersEnd + '/{id}';
   private PostUserEnd = this.UsersEnd;
 
-  private GetUserDetailsEnd = this.GetUser + '/Details';
+  private GetUserDetailsEnd = this.GetUserEnd + '/Details';
   private PutUserDetailsEnd = this.PatchUserEnd + '/{id}/Details';
   private PutAvatar = this.PatchUserEnd + '/{id}/Details/avatar';
 
