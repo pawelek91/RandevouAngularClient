@@ -13,3 +13,20 @@ export interface UserDto {
   birthDate?: string;
   gender?: string;
 }
+
+export interface UsersDetailsDto {
+  id?: number;
+  width?: number;
+  height?: number;
+  region?: string;
+  city?: string;
+  tatoos?: string;
+  eyesColor?: number;
+  hairColor?: number;
+  interes?: number[];
+}
+
+export interface UserFullDto {
+  basic: UserDto;
+  details: UsersDetailsDto;
+}
