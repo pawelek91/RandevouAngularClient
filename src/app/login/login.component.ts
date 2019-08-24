@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersAuthService } from '../services/users/usersAuth.service';
 import { NgForm } from '@angular/forms';
+import { ApiQueryService } from '../services/external/api-query.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,12 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
+    const identity = ApiQueryService.GetIdentity();
+    if (identity.length < 1) {
+      this.logged = false;
+    } else {
+      this.logged = true;
+    }
   }
 
   onSubmit(loginFormRef: NgForm) {
@@ -27,6 +34,7 @@ export class LoginComponent implements OnInit {
 
       loginFormRef.resetForm();
     }, (error) => {
+      ApiQueryService.ClearLoginInfos();
       this.loginFailed = true;
       console.log(error);
     });

@@ -72,8 +72,7 @@ export class UsersAuthService {
   }
 
   LogoutUser() {
-    localStorage.removeItem('RANDEVOU_APIKEY');
-    localStorage.removeItem('RANDEVOU_IDENTITY');
+    ApiQueryService.ClearLoginInfos();
   }
 
   GetIdentity(apiKey: string) {

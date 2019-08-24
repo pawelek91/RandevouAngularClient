@@ -14,6 +14,11 @@ export class ApiQueryService {
     return identity;
   }
 
+  static ClearLoginInfos() {
+    localStorage.removeItem('RANDEVOU_IDENTITY');
+    localStorage.removeItem('RANDEVOU_APIKEY');
+  }
+
   BuildAddress(address: string, id?: number): string {
     if (id == null && id === undefined) {
       return address;
@@ -23,8 +28,10 @@ export class ApiQueryService {
     return address;
   }
 
-  GetApiKey(): string{
+  GetApiKey(): string {
     const apiKey = localStorage.getItem('RANDEVOU_APIKEY');
     return apiKey;
   }
+
+
 }

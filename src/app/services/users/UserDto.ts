@@ -1,4 +1,5 @@
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { DictionaryItemDto } from 'src/app/common/DictionaryItemDto';
 
 export interface UserCreateDto {
   userDto?: UserDto;
@@ -24,6 +25,13 @@ export interface UsersDetailsDto {
   eyesColor?: number;
   hairColor?: number;
   interes?: number[];
+  dictionaryValues?: UserDictionaryValues;
+}
+
+export interface UserDictionaryValues {
+  eyesColor?: DictionaryItemDto;
+  hairColor?: DictionaryItemDto;
+  interest?: DictionaryItemDto[];
 }
 
 export interface UserFullDto {
