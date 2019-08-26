@@ -13,13 +13,11 @@ export class UsersService {
 constructor(private usersQuery: UsersQueryExternalService, private dictionaryQuery: DictionaryItemsService) {
 
 }
-GetUserBasic() {
-  const identity = ApiQueryService.GetIdentity();
+GetUserBasic(identity: string) {
   return this.usersQuery.GetUser(+identity);
 }
 
-GetUserWithDetails() {
-  const identity = ApiQueryService.GetIdentity();
+GetUserWithDetails(identity: string) {
   return this.usersQuery.GetUserDetails(+identity);
 }
 
@@ -36,7 +34,13 @@ GetInterestsDictionary() {
 }
 
 PatchUserData(dto: UserFullDto) {
+  this.usersQuery.PatchUserBasicData(dto.basic.id, dto.basic).subscribe(result => {
+    if (result) {
+      this.usersQuery.PutUserDetails(dto.basic.id, dto.details).subscribe(secondResult => {
 
+      });
+    }
+  });
 }
 
 

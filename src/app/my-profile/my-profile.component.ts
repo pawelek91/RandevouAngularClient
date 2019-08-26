@@ -5,6 +5,7 @@ import { UsersService } from '../services/UsersService';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
 import { Observable } from 'rxjs';
+import { ApiQueryService } from '../services/external/api-query.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -56,7 +57,9 @@ export class MyProfileComponent implements OnInit {
   }
 
   getMyProfileData() {
-    this.usersService.GetUserBasic().subscribe(result => {
+    const id = ApiQueryService.GetIdentity();
+
+    this.usersService.GetUserBasic(id).subscribe(result => {
       this.userDto.basic = result;
       const date = new Date(this.userDto.basic.birthDate);
 
@@ -66,7 +69,7 @@ export class MyProfileComponent implements OnInit {
       console.log(error);
     });
 
-    this.usersService.GetUserWithDetails().subscribe(result => {
+    this.usersService.GetUserWithDetails(id).subscribe(result => {
       this.userDto.details = result;
       this.userDto.details.id = this.userDto.basic.id;
     }, (error) => {
