@@ -3,6 +3,8 @@ import { UsersQueryExternalService } from './external/UsersQueryExt.service';
 import { UserDto, UserFullDto } from './users/UserDto';
 import { Injectable } from '@angular/core';
 import { DictionaryItemsService } from './external/DictionaryItems.service';
+import { map } from 'rxjs/operators';
+import { QueryResult } from '../common/QueryResult';
 
 @Injectable({
   providedIn: 'root'
@@ -34,13 +36,25 @@ GetInterestsDictionary() {
 }
 
 PatchUserData(dto: UserFullDto) {
-  this.usersQuery.PatchUserBasicData(dto.basic.id, dto.basic).subscribe(result => {
+  const queryResult = new QueryResult();
+  return this.usersQuery.PatchUserBasicData(dto.basic.id, dto.basic).pipe(map(result => {
     if (result) {
       this.usersQuery.PutUserDetails(dto.basic.id, dto.details).subscribe(secondResult => {
-
+        if (secondResult) {
+          queryResult.isSuccess = true;
+          return queryResult;
+        } else {
+          queryResult.isSuccess = false;
+          queryResult.message = 'Nie udało się zaktualizować szczegółowych danych użytkownika';
+        }
+        return queryResult;
       });
+    } else {
+      queryResult.isSuccess = false;
+      queryResult.message = 'Nie udało się zaktualizować danych użytkownika';
+      return queryResult;
     }
-  });
+  }));
 }
 
 

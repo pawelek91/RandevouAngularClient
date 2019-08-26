@@ -14,13 +14,14 @@ import { ApiQueryService } from '../services/external/api-query.service';
 })
 export class MyProfileComponent implements OnInit {
 
+  updateNotSucceded: boolean;
   userDto: UserFullDto;
   newPassword: string;
   newBirthDate: NgbDate;
 
-  public hairColorsDict: Array<DictionaryItemDto>;
-  public eyesColorsDict: Array<DictionaryItemDto>;
-  public interestsDict: Array<DictionaryItemDto>;
+  hairColorsDict: Array<DictionaryItemDto>;
+  eyesColorsDict: Array<DictionaryItemDto>;
+  interestsDict: Array<DictionaryItemDto>;
 
   constructor(private usersService: UsersService) {
     this.userDto = {
@@ -96,9 +97,15 @@ export class MyProfileComponent implements OnInit {
     }
   }
   onSubmit(myProfileFormRef: NgForm) {
-    const birthDate = myProfileFormRef.value('dp') as NgbDate;
+    const birthDate = myProfileFormRef.value['dp'] as NgbDate;
     this.userDto.basic.birthDate = new Date(birthDate.year, birthDate.month, birthDate.day).toJSON();
-    this.usersService.PatchUserData(this.userDto);
+    this.usersService.PatchUserData(this.userDto).subscribe(result => {
+      if (!result.isSuccess) {
+        console.log('error: ' + result.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   onChangePassword(changePasswordFormRef: NgForm) {
