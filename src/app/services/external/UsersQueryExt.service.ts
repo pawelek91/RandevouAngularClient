@@ -49,4 +49,32 @@ export class UsersQueryExternalService extends ApiQueryService {
       return result;
     }));
   }
+
+  PatchUserBasicData(id: number, dto: UserDto) {
+    const apiKey = this.GetApiKey();
+    let addHeaders = new HttpHeaders();
+    addHeaders = addHeaders.append('Authorization', apiKey);
+
+    const endpoint = this.BuildAddress(this.PatchUserEnd);
+    return this.client.post(endpoint, dto, {observe: 'response'} )
+    .pipe(map(response => {
+      if (response.ok) {
+      return true;
+      } else { return false; }
+    }));
+  }
+
+  PutUserDetails(id: number, dto: UsersDetailsDto) {
+    const apiKey = this.GetApiKey();
+    let addHeaders = new HttpHeaders();
+    addHeaders = addHeaders.append('Authorization', apiKey);
+
+    const endpoint = this.BuildAddress(this.PutUserDetailsEnd, id);
+    return this.client.post(endpoint, dto, {observe: 'response'})
+    .pipe(map(result => {
+      if (result.ok) {
+        return true;
+      } else { return false; }
+    }));
+  }
 }

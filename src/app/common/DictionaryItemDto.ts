@@ -1,7 +1,7 @@
-export class DictionaryItemDto{
+export class DictionaryItemDto {
   id?: number;
-  ItemType?: string;
-  Name?: string;
-  DisplayName?: string;
-  ObjectType?: string;
+  itemType?: string;
+  name?: string;
+  displayName?: string;
+  objectType?: string;
 }

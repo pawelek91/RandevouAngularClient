@@ -1,6 +1,6 @@
 import { ApiQueryService } from './external/api-query.service';
 import { UsersQueryExternalService } from './external/UsersQueryExt.service';
-import { UserDto } from './users/UserDto';
+import { UserDto, UserFullDto } from './users/UserDto';
 import { Injectable } from '@angular/core';
 import { DictionaryItemsService } from './external/DictionaryItems.service';
 
@@ -33,6 +33,10 @@ GetEyesColorsDictionary() {
 
 GetInterestsDictionary() {
   return this.dictionaryQuery.GetAllInterests();
+}
+
+PatchUserData(dto: UserFullDto) {
+
 }
 
 

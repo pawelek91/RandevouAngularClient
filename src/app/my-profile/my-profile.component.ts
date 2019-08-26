@@ -4,6 +4,7 @@ import { UserDto, UserFullDto } from '../services/users/UserDto';
 import { UsersService } from '../services/UsersService';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-my-profile',
@@ -16,17 +17,22 @@ export class MyProfileComponent implements OnInit {
   newPassword: string;
   newBirthDate: NgbDate;
 
-  hairColorsDict: DictionaryItemDto[];
-  eyesColorsDict: DictionaryItemDto[];
-  interestsDict: DictionaryItemDto[];
+  public hairColorsDict: Array<DictionaryItemDto>;
+  public eyesColorsDict: Array<DictionaryItemDto>;
+  public interestsDict: Array<DictionaryItemDto>;
 
   constructor(private usersService: UsersService) {
     this.userDto = {
       basic : {},
       details : { },
     };
-    this.getMyProfileData();
+
+    this.hairColorsDict = new Array<DictionaryItemDto>();
+    this.eyesColorsDict = new Array<DictionaryItemDto>();
+    this.interestsDict = new Array<DictionaryItemDto>();
     this.getDictionariesData();
+    this.getMyProfileData();
+
    }
 
   ngOnInit() {
@@ -34,12 +40,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   getDictionariesData() {
+
     this.usersService.GetEyesColorsDictionary().subscribe(result => {
       this.eyesColorsDict = result;
     });
 
     this.usersService.GetHairColorsDictionary().subscribe(result => {
       this.hairColorsDict = result;
+      console.log(this.hairColorsDict);
     });
 
     this.usersService.GetInterestsDictionary().subscribe(result => {
@@ -60,6 +68,7 @@ export class MyProfileComponent implements OnInit {
 
     this.usersService.GetUserWithDetails().subscribe(result => {
       this.userDto.details = result;
+      this.userDto.details.id = this.userDto.basic.id;
     }, (error) => {
       console.log(error);
     });
@@ -84,7 +93,9 @@ export class MyProfileComponent implements OnInit {
     }
   }
   onSubmit(myProfileFormRef: NgForm) {
-
+    const birthDate = myProfileFormRef.value('dp') as NgbDate;
+    this.userDto.basic.birthDate = new Date(birthDate.year, birthDate.month, birthDate.day).toJSON();
+    this.usersService.PatchUserData(this.userDto);
   }
 
   onChangePassword(changePasswordFormRef: NgForm) {

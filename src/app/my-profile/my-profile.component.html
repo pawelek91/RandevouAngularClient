@@ -17,11 +17,21 @@
             </div>
 
       <label for="gender">Płeć</label>
-      <select [(ngModel)]="userDto.basic.gender" type="text" id="gender" name="gender">
+      <select [(ngModel)]="userDto.basic.gender"  id="gender" name="gender">
         <option value="m">Mężczyzna</option>
         <option value="f">Kobieta</option>
       </select>
 
+      <label for="eyesColor">Kolor oczu</label>
+      <select [(ngModel)]="userDto.details.eyesColor"  id="eyesColor" name="eyesColor">
+        <option *ngFor="let ec of eyesColorsDict" [ngValue]="ec?.id"> {{ec?.displayName}}</option>
+      </select>
+
+
+      <label for="hairColor">Kolor włosów</label>
+      <select [(ngModel)]="userDto.details.hairColor"  id="hairHolor" name="hairColor">
+        <option *ngFor="let hc of hairColorsDict" [ngValue]="hc?.id"> {{hc?.displayName}}</option>
+      </select>
 
   <button type="submit">Zapisz zmiany</button>
 </div>
