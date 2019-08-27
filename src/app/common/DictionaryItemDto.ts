@@ -4,4 +4,5 @@ export class DictionaryItemDto {
   name?: string;
   displayName?: string;
   objectType?: string;
+  boolValue?: boolean;
 }

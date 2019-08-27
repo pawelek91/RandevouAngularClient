@@ -26,6 +26,19 @@
         <option value="f">Kobieta</option>
       </select>
 
+      <label for="city">Miasto</label>
+      <input type="text" id="city" name="city" [(ngModel)]="userDto.details.city" >
+
+      <label for="region">Województwo</label>
+      <input type="text" id="region" name="region" [(ngModel)]="userDto.details.region" >
+
+      <label for="width">Wzrost</label>
+      <input type="text" id="width" name="width" [(ngModel)]="userDto.details.width" >
+
+      <label for="heigth">Waga</label>
+      <input type="text" id="heigth" name="heigth" [(ngModel)]="userDto.details.heigth" >
+
+
       <label for="eyesColor">Kolor oczu</label>
       <select [(ngModel)]="userDto.details.eyesColor"  id="eyesColor" name="eyesColor">
         <option *ngFor="let ec of eyesColorsDict" [ngValue]="ec?.id"> {{ec?.displayName}}</option>
@@ -36,6 +49,16 @@
       <select [(ngModel)]="userDto.details.hairColor"  id="hairHolor" name="hairColor">
         <option *ngFor="let hc of hairColorsDict" [ngValue]="hc?.id"> {{hc?.displayName}}</option>
       </select>
+
+      <label for="interest">Zainteresowania</label>
+      <ul>
+        <li *ngFor="let interest of interestsDict; let i = index">
+          <label>
+            <input name="selected" type="checkbox" [(ngModel)]="interestsDict[i].boolValue" [ngModelOptions]="{standalone: true}">
+            {{interestsDict[i].displayName}}
+          </label>
+        </li>
+      </ul>
 
   <button type="submit">Zapisz zmiany</button>
 </div>

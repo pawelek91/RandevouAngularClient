@@ -32,8 +32,13 @@ export class MyProfileComponent implements OnInit {
     this.hairColorsDict = new Array<DictionaryItemDto>();
     this.eyesColorsDict = new Array<DictionaryItemDto>();
     this.interestsDict = new Array<DictionaryItemDto>();
+
+
+
+
     this.getDictionariesData();
     this.getMyProfileData();
+
 
    }
 
@@ -49,11 +54,13 @@ export class MyProfileComponent implements OnInit {
 
     this.usersService.GetHairColorsDictionary().subscribe(result => {
       this.hairColorsDict = result;
-      console.log(this.hairColorsDict);
     });
 
     this.usersService.GetInterestsDictionary().subscribe(result => {
       this.interestsDict = result;
+      this.interestsDict.forEach(x => {
+        x.boolValue = false;
+      });
     });
   }
 
@@ -91,14 +98,23 @@ export class MyProfileComponent implements OnInit {
       this.hairColorsDict.find(x => x.id === this.userDto.details.hairColor);
     }
 
-    if (this.userDto.details.interes != null) {
+    if (this.userDto.details.interests != null) {
       this.userDto.details.dictionaryValues.interest =
-      this.interestsDict.filter(x => this.userDto.details.interes.some(y => y === x.id));
+      this.interestsDict.filter(x => this.userDto.details.interests.some(y => y === x.id));
+
+      this.interestsDict.forEach(element => {
+        if (this.userDto.details.interests.some(x => x === element.id)) {
+         // element.boolValue = true;
+        }
+      });
     }
   }
   onSubmit(myProfileFormRef: NgForm) {
     const birthDate = myProfileFormRef.value['dp'] as NgbDate;
     this.userDto.basic.birthDate = new Date(birthDate.year, birthDate.month, birthDate.day).toJSON();
+
+    const checkedInterestsIds = this.interestsDict.filter(x => x.boolValue).map(x => x.id);
+    this.userDto.details.interests = checkedInterestsIds;
     this.usersService.PatchUserData(this.userDto).subscribe(result => {
       if (!result.isSuccess) {
         console.log('error: ' + result.message);

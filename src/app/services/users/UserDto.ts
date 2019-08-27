@@ -18,13 +18,13 @@ export interface UserDto {
 export interface UsersDetailsDto {
   id?: number;
   width?: number;
-  height?: number;
+  heigth?: number;
   region?: string;
   city?: string;
   tatoos?: string;
   eyesColor?: number;
   hairColor?: number;
-  interes?: number[];
+  interests?: number[];
   dictionaryValues?: UserDictionaryValues;
 }
 
