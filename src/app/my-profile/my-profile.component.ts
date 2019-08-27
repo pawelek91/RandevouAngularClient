@@ -33,13 +33,8 @@ export class MyProfileComponent implements OnInit {
     this.eyesColorsDict = new Array<DictionaryItemDto>();
     this.interestsDict = new Array<DictionaryItemDto>();
 
-
-
-
     this.getDictionariesData();
     this.getMyProfileData();
-
-
    }
 
   ngOnInit() {
