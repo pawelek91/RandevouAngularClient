@@ -4,6 +4,7 @@ import { UsersAuthService } from '../services/users/usersAuth.service';
 import { UserCreateDto } from '../services/users/UserDto';
 import { take, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ApiQueryService } from '../services/external/api-query.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -16,6 +17,12 @@ export class UserRegistrationComponent implements OnInit {
   userRegistrationFailed = false;
 
   constructor(private usersService: UsersAuthService, private router: Router) {
+
+    const identity = ApiQueryService.GetIdentity();
+
+    if (identity !== null || identity.length > 0) {
+    this.router.navigate(['/login']);
+    }
     this.registerDto = {
     };
     this.registerDto.userDto = { };
