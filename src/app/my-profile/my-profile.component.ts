@@ -6,6 +6,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
 import { Observable } from 'rxjs';
 import { ApiQueryService } from '../services/external/api-query.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
@@ -18,12 +19,19 @@ export class MyProfileComponent implements OnInit {
   userDto: UserFullDto;
   newPassword: string;
   newBirthDate: NgbDate;
+  identity: string;
 
   hairColorsDict: Array<DictionaryItemDto>;
   eyesColorsDict: Array<DictionaryItemDto>;
   interestsDict: Array<DictionaryItemDto>;
 
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersService, router: Router) {
+    this.identity = ApiQueryService.GetIdentity();
+
+    if (this.identity.length < 1) {
+      router.navigate(['/login']);
+    } else {
+
     this.userDto = {
       basic : {},
       details : { },
@@ -35,6 +43,7 @@ export class MyProfileComponent implements OnInit {
 
     this.getDictionariesData();
     this.getMyProfileData();
+    }
    }
 
   ngOnInit() {
@@ -60,9 +69,9 @@ export class MyProfileComponent implements OnInit {
   }
 
   getMyProfileData() {
-    const id = ApiQueryService.GetIdentity();
 
-    this.usersService.GetUserBasic(id).subscribe(result => {
+
+    this.usersService.GetUserBasic(this.identity).subscribe(result => {
       this.userDto.basic = result;
       const date = new Date(this.userDto.basic.birthDate);
 
@@ -72,7 +81,7 @@ export class MyProfileComponent implements OnInit {
       console.log(error);
     });
 
-    this.usersService.GetUserWithDetails(id).subscribe(result => {
+    this.usersService.GetUserWithDetails(this.identity).subscribe(result => {
       this.userDto.details = result;
       this.userDto.details.id = this.userDto.basic.id;
     }, (error) => {

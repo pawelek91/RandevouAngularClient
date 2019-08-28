@@ -17,11 +17,12 @@ export class LoginComponent implements OnInit {
 
   constructor(private usersService: UsersAuthService) {
     this.loginFailed = false;
+    this.logged = false;
    }
 
   ngOnInit() {
     const identity = ApiQueryService.GetIdentity();
-    if (identity.length < 1) {
+    if (identity === null || identity.length < 1) {
       this.logged = false;
     } else {
       this.logged = true;

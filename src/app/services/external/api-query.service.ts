@@ -10,7 +10,10 @@ export class ApiQueryService {
   static ApiEndpoint  = 'http://localhost:7777';
 
   static GetIdentity(): string {
-    const identity = localStorage.getItem('RANDEVOU_IDENTITY');
+    let identity = localStorage.getItem('RANDEVOU_IDENTITY');
+    if(identity === null || typeof(identity) === undefined) {
+      identity = '';
+     }
     return identity;
   }
 

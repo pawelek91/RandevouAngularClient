@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UsersAuthService } from '../services/users/usersAuth.service';
 import { UserCreateDto } from '../services/users/UserDto';
 import { take, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration',
@@ -14,7 +15,7 @@ export class UserRegistrationComponent implements OnInit {
   registerDto: UserCreateDto;
   userRegistrationFailed = false;
 
-  constructor(private usersService: UsersAuthService) {
+  constructor(private usersService: UsersAuthService, private router: Router) {
     this.registerDto = {
     };
     this.registerDto.userDto = { };
@@ -30,7 +31,7 @@ export class UserRegistrationComponent implements OnInit {
       if (result.isSuccess) {
         this.userRegistered(registerFormRef);
         this.userRegistrationFailed = false;
-        // redirect to login
+        this.router.navigate(['/login']);
         } else {
             this.userRegistrationFailed = true;
           }
