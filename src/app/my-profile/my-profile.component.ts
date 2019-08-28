@@ -124,7 +124,7 @@ export class MyProfileComponent implements OnInit {
     const checkedInterestsIds = this.interestsDict.filter(x => x.boolValue).map(x => x.id);
     this.userDto.details.interests = checkedInterestsIds;
     this.usersService.PatchUserData(this.userDto).subscribe(result => {
-      if (!result.isSuccess) {
+      if (result !== null && !result.isSuccess) {
         console.log('error: ' + result.message);
       }
     }, (error) => {
