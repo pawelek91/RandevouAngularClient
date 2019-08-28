@@ -69,8 +69,6 @@ export class MyProfileComponent implements OnInit {
   }
 
   getMyProfileData() {
-
-
     this.usersService.GetUserBasic(this.identity).subscribe(result => {
       this.userDto.basic = result;
       const date = new Date(this.userDto.basic.birthDate);
@@ -84,6 +82,12 @@ export class MyProfileComponent implements OnInit {
     this.usersService.GetUserWithDetails(this.identity).subscribe(result => {
       this.userDto.details = result;
       this.userDto.details.id = this.userDto.basic.id;
+
+      this.interestsDict.forEach(element => {
+        if (this.userDto.details.interests.some(x => x === element.id)) {
+         element.boolValue = true;
+        }
+      });
     }, (error) => {
       console.log(error);
     });
@@ -108,7 +112,7 @@ export class MyProfileComponent implements OnInit {
 
       this.interestsDict.forEach(element => {
         if (this.userDto.details.interests.some(x => x === element.id)) {
-         // element.boolValue = true;
+         element.boolValue = true;
         }
       });
     }
