@@ -1,10 +1,10 @@
-import { ApiQueryService } from './external/api-query.service';
-import { UsersQueryExternalService } from './external/UsersQueryExt.service';
-import { UserDto, UserFullDto } from './users/UserDto';
+import { ApiQueryService } from '../external/api-query.service';
+import { UsersQueryExternalService } from '../external/UsersQueryExt.service';
+import { UserDto, UserFullDto } from './UserDto';
 import { Injectable } from '@angular/core';
-import { DictionaryItemsService } from './external/DictionaryItems.service';
+import { DictionaryItemsService } from '../external/DictionaryItems.service';
 import { map } from 'rxjs/operators';
-import { QueryResult } from '../common/QueryResult';
+import { QueryResult } from '../../common/QueryResult';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +55,10 @@ PatchUserData(dto: UserFullDto) {
       return queryResult;
     }
   }));
+}
+
+GetManyUsers(ids: Array<number>){
+  return this.usersQuery.GetManyUsers(ids);
 }
 
 

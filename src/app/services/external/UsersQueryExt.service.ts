@@ -70,11 +70,22 @@ export class UsersQueryExternalService extends ApiQueryService {
     addHeaders = addHeaders.append('Authorization', apiKey);
 
     const endpoint = this.BuildAddress(this.PutUserDetailsEnd, id);
-    return this.client.patch(endpoint, dto, {observe: 'response', headers:addHeaders})
+    return this.client.patch(endpoint, dto, {observe: 'response', headers: addHeaders})
     .pipe(map(result => {
       if (result.ok) {
         return true;
       } else { return false; }
+    }));
+  }
+
+  GetManyUsers(id: Array<number>) {
+    const apiKey = this.GetApiKey();
+    let addHeaders = new HttpHeaders();
+    addHeaders = addHeaders.append('Authorization', apiKey);
+
+    const endpoint = this.BuildAddress(this.GetManyUsersEnd);
+    return this.client.post<Array<UserDto>>(endpoint, {headers: addHeaders}).pipe(map(result => {
+      return result;
     }));
   }
 }

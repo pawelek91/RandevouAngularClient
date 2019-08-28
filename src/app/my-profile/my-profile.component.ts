@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserDto, UserFullDto } from '../services/users/UserDto';
-import { UsersService } from '../services/UsersService';
+import { UsersService } from '../services/users/users.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
 import { Observable } from 'rxjs';
