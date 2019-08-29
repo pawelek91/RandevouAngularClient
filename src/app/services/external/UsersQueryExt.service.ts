@@ -1,5 +1,5 @@
 import { ApiQueryService } from './api-query.service';
-import { UserDto, UsersDetailsDto } from '../users/UserDto';
+import { UserDto, UsersDetailsDto, UserAvatarDto } from '../users/UserDto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -84,6 +84,15 @@ export class UsersQueryExternalService extends ApiQueryService {
 
     const endpoint = this.BuildAddress(this.GetManyUsersEnd);
     return this.client.post<Array<UserDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
+      return result;
+    }));
+  }
+
+  GetUsersAvatar(ids: Array<number>): Observable<Array<UserAvatarDto>> {
+    const apiKey = this.GetApiKey();
+    const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+    const endpoint = this.BuildAddress(this.GetUsersAvatars);
+    return this.client.post<Array<UserAvatarDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
       return result;
     }));
   }

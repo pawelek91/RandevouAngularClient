@@ -14,7 +14,7 @@ import { DictionaryItemDto } from '../common/DictionaryItemDto';
 export class UserFinderComponent implements OnInit {
 
   queryDto: SearchQueryDto;
-  searchAttemp: boolean = false;
+  searchAttemp = false;
   searchResult: Array<UserDto>;
 
   interestDictionary: Array<DictionaryItemDto>;
@@ -46,11 +46,25 @@ export class UserFinderComponent implements OnInit {
   }
 
   onSubmit(searchFormRef: NgForm) {
-    this.queryDto.interestids = this.interestDictionary.filter(x=> x.boolValue).map(x => x.id);
-    this.searchService.FindUsers(this.queryDto).subscribe(ids =>{
+    this.queryDto.interestids = this.interestDictionary.filter(x => x.boolValue).map(x => x.id);
+    this.searchService.FindUsers(this.queryDto).subscribe(ids => {
       this.usersService.GetManyUsers(ids).subscribe(usersDtos => {
         this.searchResult = usersDtos;
         this.searchAttemp = true;
+
+        this.usersService.GetUsersAvatars(ids).subscribe(result => {
+          this.searchResult.forEach(x => {
+            const avatar = result.find(av => av.userId === x.id);
+
+            if (avatar !== null && typeof(avatar) !== undefined && avatar.avatarContentType.length > 0
+            && avatar.avatarContentBytes.length > 0) {
+              x.avatar = avatar.avatarContentBytes;
+
+              //generate <img base 64>...
+             }
+          });
+        });
+
       });
     });
   }

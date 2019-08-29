@@ -13,7 +13,10 @@ export interface UserDto {
   displayName?: string;
   birthDate?: string;
   gender?: string;
+  avatar?: string;
 }
+
+
 
 export interface UsersDetailsDto {
   id?: number;
@@ -37,4 +40,10 @@ export interface UserDictionaryValues {
 export interface UserFullDto {
   basic: UserDto;
   details: UsersDetailsDto;
+}
+
+export interface UserAvatarDto {
+  userId?: number;
+  avatarContentBytes: string;
+  avatarContentType: string;
 }

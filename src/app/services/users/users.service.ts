@@ -61,5 +61,8 @@ GetManyUsers(ids: Array<number>){
   return this.usersQuery.GetManyUsers(ids);
 }
 
+GetUsersAvatars(ids: Array<number>) {
+  return this.usersQuery.GetUsersAvatar(ids);
+ }
 
 }
