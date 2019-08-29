@@ -56,7 +56,7 @@ export class UsersQueryExternalService extends ApiQueryService {
     addHeaders = addHeaders.append('Authorization', apiKey);
 
     const endpoint = this.BuildAddress(this.PatchUserEnd);
-    return this.client.patch(endpoint, dto, {observe: 'response', headers:addHeaders} )
+    return this.client.patch(endpoint, dto, {observe: 'response', headers: addHeaders} )
     .pipe(map(response => {
       if (response.ok) {
       return true;
@@ -78,13 +78,12 @@ export class UsersQueryExternalService extends ApiQueryService {
     }));
   }
 
-  GetManyUsers(id: Array<number>) {
+  GetManyUsers(ids: Array<number>) {
     const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
+    const addHeaders = new HttpHeaders().set('Authorization', apiKey)
 
     const endpoint = this.BuildAddress(this.GetManyUsersEnd);
-    return this.client.post<Array<UserDto>>(endpoint, {headers: addHeaders}).pipe(map(result => {
+    return this.client.post<Array<UserDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
       return result;
     }));
   }
