@@ -10,19 +10,12 @@ import { Injectable } from '@angular/core';
 })
 
 export class SearchUsersService {
-  constructor(private searchService: SearchUsersExternalService, private usersService: UsersService) {
+  constructor(private searchService: SearchUsersExternalService) {
     }
 
-    findStaticQueryIds(dto: SearchQueryDto) {
+    FindUsers(dto: SearchQueryDto) {
       return this.searchService.SearchUsers(dto).pipe(map((result: number[]) => {
         return result;
       }));
     }
-
-    GetUsers(ids: Array<number>) {
-      return this.usersService.GetManyUsers(ids).pipe(map(r => {
-        return r;
-      }));
-    }
-
 }

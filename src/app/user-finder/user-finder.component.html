@@ -37,8 +37,28 @@
 
       <label for="tattos">Tatuaże</label>
       <input type="checkbox" id="tatoos" name="tatoos" [(ngModel)]="queryDto.tatoos">
-      <!-- haircolor, eyescolor, interests...  -->
 
+
+      <label for="eyesColor">Kolor oczu</label>
+      <select [(ngModel)]="queryDto.eyescolor"  id="eyesColor" name="eyesColor">
+        <option *ngFor="let ec of eyesDictionary" [ngValue]="ec?.id"> {{ec?.displayName}}</option>
+      </select>
+
+
+      <label for="hairColor">Kolor włosów</label>
+      <select [(ngModel)]="queryDto.haircolor"  id="hairHolor" name="hairColor">
+        <option *ngFor="let hc of hairsDictionary" [ngValue]="hc?.id"> {{hc?.displayName}}</option>
+      </select>
+
+      <label for="interest">Zainteresowania</label>
+      <ul>
+        <li *ngFor="let interest of interestDictionary; let i = index">
+          <label>
+            <input name="selected" type="checkbox" [(ngModel)]="interestDictionary[i].boolValue" [ngModelOptions]="{standalone: true}">
+            {{interestDictionary[i].displayName}}
+          </label>
+        </li>
+      </ul>
 
   <button type="submit">Wyszukaj</button>
 </div>
