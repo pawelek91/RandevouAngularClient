@@ -1,0 +1,57 @@
+<form (ngSubmit)="onSubmit(searchFormRef)" #searchFormRef="ngForm">
+  <div style="display: inline-grid ">
+
+      <label for="userName">Nazwa użytkownika</label>
+      <input type="text" id="userName" name="userName" [(ngModel)]="queryDto.name">
+
+      <label for="region">Województwo</label>
+      <input type="text" id="region" name="region" [(ngModel)]="queryDto.region">
+
+      <label for="city">Miasto</label>
+      <input type="text" id="city" name="city" [(ngModel)]="queryDto.city">
+
+      <label for="ageFrom">Wiek od</label>
+      <input type="text" id="ageFrom" name="ageFrom" [(ngModel)]="queryDto.agefrom">
+
+      <label for="ageTo">Wiek do</label>
+      <input type="text" id="ageTo" name="ageTo" [(ngModel)]="queryDto.ageto">
+
+      <label for="widthFrom">Wzrost od</label>
+      <input type="text" id="widthFrom" name="widthFrom" [(ngModel)]="queryDto.widthfrom">
+
+      <label for="widthTo">Wzrost do</label>
+      <input type="text" id="widthTo" name="widthTo" [(ngModel)]="queryDto.widthto">
+
+
+      <label for="heigthFrom">Waga od</label>
+      <input type="text" id="heigthFrom" name="heigthFrom" [(ngModel)]="queryDto.heightfrom">
+
+      <label for="heigthTo">Waga do</label>
+      <input type="text" id="heigthTo" name="heigthTo" [(ngModel)]="queryDto.heightto">
+
+      <label for="gender">Płeć</label>
+      <select [(ngModel)]="queryDto.gender" type="text" id="gender" name="gender">
+        <option value="m">Mężczyzna</option>
+        <option value="f">Kobieta</option>
+      </select>
+
+      <label for="tattos">Tatuaże</label>
+      <input type="checkbox" id="tatoos" name="tatoos" [(ngModel)]="queryDto.tatoos">
+      <!-- haircolor, eyescolor, interests...  -->
+
+
+  <button type="submit">Wyszukaj</button>
+</div>
+
+<!-- SEARCH RESULT-->
+<ng-container *ngIf="searchAttemp">
+  <ul>
+    <li *ngFor="let dto of searchResult">
+      Nazwa użytkownika: {{dto.name}}
+      Nazwa użytkownika: {{dto.displayName}}
+      Data urodzenia: {{dto.birthDate}}
+      Płeć: {{dto.gender}}
+    </li>
+  </ul>
+</ng-container>
+</form>
