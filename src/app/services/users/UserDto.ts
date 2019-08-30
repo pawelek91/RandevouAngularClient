@@ -29,6 +29,8 @@ export interface UsersDetailsDto {
   hairColor?: number;
   interests?: number[];
   dictionaryValues?: UserDictionaryValues;
+  avatarImage?: string;
+  AvatarContentType?: string;
 }
 
 export interface UserDictionaryValues {
@@ -43,6 +45,7 @@ export interface UserFullDto {
 }
 
 export interface UserAvatarDto {
-  id?: number;
-  img?: string;
+  userId?: number;
+  base64Content?: string;
+  contentType: string;
 }

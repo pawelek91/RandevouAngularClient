@@ -1,6 +1,6 @@
 import { ApiQueryService } from '../external/api-query.service';
 import { UsersQueryExternalService } from '../external/UsersQueryExt.service';
-import { UserDto, UserFullDto } from './UserDto';
+import { UserDto, UserFullDto, UsersDetailsDto, UserAvatarDto } from './UserDto';
 import { Injectable } from '@angular/core';
 import { DictionaryItemsService } from '../external/DictionaryItems.service';
 import { map } from 'rxjs/operators';
@@ -55,6 +55,10 @@ PatchUserData(dto: UserFullDto) {
       return queryResult;
     }
   }));
+}
+
+SetAvatar(avatarBase64: string, mimeType: string) {
+  const dto: UserAvatarDto = {base64Content : avatarBase64, contentType: mimeType };
 }
 
 GetManyUsers(ids: Array<number>){

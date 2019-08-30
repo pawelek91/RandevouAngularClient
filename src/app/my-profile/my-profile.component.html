@@ -2,6 +2,18 @@
   Nie udało się zaktualizować profilu.
 </ng-container>
 
+<label class="image-upload-container btn btn-bwm">
+    <span>Avatar</span>
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           (change)="processFile(imageInput)">
+  </label>
+
+  <ng-container *ngIf="myProfileAvatar !== undefined && myProfileAvatar.length>0">
+    <img src="{{myProfileAvatar}}">
+  </ng-container>
+
 <form (ngSubmit)="onSubmit(myProfileFormRef)" #myProfileFormRef="ngForm">
   <div style="display: inline-grid ">
   <label for="name">Nazwa użytkownika</label>

@@ -54,10 +54,11 @@ export class UserFinderComponent implements OnInit {
 
         this.usersService.GetUsersAvatars(ids).subscribe(result => {
           this.searchResult.forEach(x => {
-            const avatar = result.find(av => av.id === x.id);
+            const avatar = result.find(av => av.userId === x.id);
 
-            if (avatar !== null && avatar !== undefined && avatar.img !== undefined && avatar.img.length > 0){
-              x.avatar = avatar.img;
+            if (avatar !== null && avatar !== undefined
+              && avatar.base64Content !== undefined && avatar.base64Content.length > 0) {
+              x.avatar = `data:${avatar.contentType};base64,${avatar.base64Content}`;
             }
           });
         });

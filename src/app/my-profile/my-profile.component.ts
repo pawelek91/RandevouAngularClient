@@ -20,6 +20,7 @@ export class MyProfileComponent implements OnInit {
   newPassword: string;
   newBirthDate: NgbDate;
   identity: string;
+  myProfileAvatar: string;
 
   hairColorsDict: Array<DictionaryItemDto>;
   eyesColorsDict: Array<DictionaryItemDto>;
@@ -88,6 +89,11 @@ export class MyProfileComponent implements OnInit {
          element.boolValue = true;
         }
       });
+      this.usersService.GetUsersAvatars(new Array<number>() [ this.identity ]).subscribe(avatar => {
+        if (avatar[0] !== undefined && avatar[0].base64Content !== undefined) {
+          this.myProfileAvatar = `data:${avatar[0].contentType};base64,${avatar[0].base64Content}`;
+        }
+      });
     }, (error) => {
       console.log(error);
     });
@@ -136,4 +142,27 @@ export class MyProfileComponent implements OnInit {
 
   }
 
+  processFile(imageInput: any) {
+    if(imageInput === undefined || imageInput.files === undefined) {
+      return;
+    }
+    const avatarFile: File = imageInput.files[0];
+    if(avatarFile === null) {
+      return;
+    }
+
+
+    const reader = new FileReader();
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsBinaryString(avatarFile);
+    const base64str = reader.result.toString();
+    const contetType = avatarFile.type;
+
+    this.usersService.SetAvatar(base64str, contetType);
+  }
+
+  _handleReaderLoaded(readerEvt): string {
+    const binaryString = readerEvt.target.result;
+    return btoa(binaryString);
+   }
 }
