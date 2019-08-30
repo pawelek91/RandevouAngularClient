@@ -4,9 +4,10 @@ import { UserDto, UserFullDto } from '../services/users/UserDto';
 import { UsersService } from '../services/users/users.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
-import { Observable } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
 import { ApiQueryService } from '../services/external/api-query.service';
 import { Router } from '@angular/router';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-profile',
@@ -150,19 +151,21 @@ export class MyProfileComponent implements OnInit {
     if(avatarFile === null) {
       return;
     }
-
-
     const reader = new FileReader();
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsBinaryString(avatarFile);
-    const base64str = reader.result.toString();
     const contetType = avatarFile.type;
-
-    this.usersService.SetAvatar(base64str, contetType);
+    this.imageToBase64(reader, avatarFile).subscribe( base64Str => {
+      this.usersService.SetAvatar(this.identity, base64Str, contetType).subscribe(result => {
+      }, error => {
+        console.log(error);
+      });
+    });
   }
 
-  _handleReaderLoaded(readerEvt): string {
-    const binaryString = readerEvt.target.result;
-    return btoa(binaryString);
-   }
+  imageToBase64(fileReader: FileReader, fileToRead: File): Observable<string> {
+    fileReader.readAsDataURL(fileToRead);
+    return fromEvent(fileReader, 'load').pipe(pluck('currentTarget', 'result'));
+  }
+
+
+
 }

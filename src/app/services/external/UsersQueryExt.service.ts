@@ -21,7 +21,7 @@ export class UsersQueryExternalService extends ApiQueryService {
   private GetUserDetailsEnd = this.GetUserEnd + '/Details';
   private PutUserDetailsEnd = this.PatchUserEnd + '/{id}/Details';
   private PutAvatar = this.PatchUserEnd + '/{id}/Details/avatar';
-
+  private PutAvatarBase64 = this.PutAvatar + '/base64';
   private GetUsersAvatars = this.GetManyUsersEnd + '/Avatars/base64img';
 
   constructor(private client: HttpClient) {
@@ -96,4 +96,13 @@ export class UsersQueryExternalService extends ApiQueryService {
       return result;
     }));
   }
+
+  SetAvatar(dto: UserAvatarDto) {
+    const apiKey = this.GetApiKey();
+    const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+    const endpoint = this.BuildAddress(this.PutAvatarBase64, dto.userId);
+    return this.client.put(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
+      return result;
+    }));
+   }
 }

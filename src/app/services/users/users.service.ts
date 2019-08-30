@@ -57,8 +57,9 @@ PatchUserData(dto: UserFullDto) {
   }));
 }
 
-SetAvatar(avatarBase64: string, mimeType: string) {
-  const dto: UserAvatarDto = {base64Content : avatarBase64, contentType: mimeType };
+SetAvatar(identity: string, avatarBase64: string, mimeType: string) {
+  const dto: UserAvatarDto = {userId: +identity, base64Content : avatarBase64, contentType: mimeType };
+  return this.usersQuery.SetAvatar(dto);
 }
 
 GetManyUsers(ids: Array<number>){
