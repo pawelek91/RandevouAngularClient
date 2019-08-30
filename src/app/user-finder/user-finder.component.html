@@ -65,16 +65,33 @@
 
 <!-- SEARCH RESULT-->
 <ng-container *ngIf="searchAttemp">
-  <ul>
-    <li *ngFor="let dto of searchResult">
-      Nazwa użytkownika: {{dto.name}}
-      Nazwa użytkownika: {{dto.displayName}}
-      Data urodzenia: {{dto.birthDate}}
-      Płeć: {{dto.gender}}
-      <ng-container *ngIf="dto.avatar?.length>0">
-        <img src="{{dto.avatar}}" />
-      </ng-container>
-    </li>
-  </ul>
+  <table>
+    <tr>
+      <th>
+        Avatar
+      </th>
+      <th>
+          Nazwa
+      </th>
+      <th>
+        Płeć
+      </th>
+      <th>
+        Data urodzenia
+      </th>
+    </tr>
+    <tr *ngFor="let dto of searchResult" style="border: 1px solid black">
+        <td>
+            <ng-container *ngIf="dto.avatar?.length>0">
+              <img src="{{dto.avatar}}" />
+            </ng-container>
+          </td>
+
+     <td>{{dto.displayName}}</td>
+      <td>Płeć: {{dto.gender}}</td>
+      <td>Data urodzenia: {{dto.birthDate}}</td>
+
+    </tr>
+  </table>
 </ng-container>
 </form>
