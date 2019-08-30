@@ -90,7 +90,8 @@ export class MyProfileComponent implements OnInit {
          element.boolValue = true;
         }
       });
-      this.usersService.GetUsersAvatars(new Array<number>() [ this.identity ]).subscribe(avatar => {
+      const myIdAsArray: number[] = [+this.identity];
+      this.usersService.GetUsersAvatars(myIdAsArray).subscribe(avatar => {
         if (avatar[0] !== undefined && avatar[0].base64Content !== undefined) {
           this.myProfileAvatar = `data:${avatar[0].contentType};base64,${avatar[0].base64Content}`;
         }
