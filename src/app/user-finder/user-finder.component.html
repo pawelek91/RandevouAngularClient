@@ -71,6 +71,9 @@
       Nazwa użytkownika: {{dto.displayName}}
       Data urodzenia: {{dto.birthDate}}
       Płeć: {{dto.gender}}
+      <ng-container *ngIf="dto.avatar?.length>0">
+        <img src="{{dto.avatar}}" />
+      </ng-container>
     </li>
   </ul>
 </ng-container>

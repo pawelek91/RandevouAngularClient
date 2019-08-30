@@ -22,7 +22,7 @@ export class UsersQueryExternalService extends ApiQueryService {
   private PutUserDetailsEnd = this.PatchUserEnd + '/{id}/Details';
   private PutAvatar = this.PatchUserEnd + '/{id}/Details/avatar';
 
-  private GetUsersAvatars = this.GetManyUsersEnd + '/Avatars';
+  private GetUsersAvatars = this.GetManyUsersEnd + '/Avatars/base64img';
 
   constructor(private client: HttpClient) {
     super();

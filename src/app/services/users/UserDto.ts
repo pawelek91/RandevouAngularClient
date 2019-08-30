@@ -43,7 +43,6 @@ export interface UserFullDto {
 }
 
 export interface UserAvatarDto {
-  userId?: number;
-  avatarContentBytes: string;
-  avatarContentType: string;
+  id?: number;
+  img?: string;
 }
