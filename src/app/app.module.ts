@@ -11,13 +11,15 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserFinderComponent } from './user-finder/user-finder.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 @NgModule({
   declarations: [
     AppComponent,
     UserRegistrationComponent,
     LoginComponent,
     MyProfileComponent,
-    UserFinderComponent
+    UserFinderComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

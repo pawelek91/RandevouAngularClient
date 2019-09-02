@@ -87,7 +87,9 @@
             </ng-container>
           </td>
 
-     <td>{{dto.displayName}}</td>
+     <td>
+       <a [routerLink]="['/user/', dto.id ]" routerLinkActive="router-link-active">
+       {{dto.displayName}} </a></td>
       <td>Płeć: {{dto.gender}}</td>
       <td>Data urodzenia: {{dto.birthDate}}</td>
 

@@ -4,6 +4,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { LoginComponent } from './login/login.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserFinderComponent } from './user-finder/user-finder.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 const appRoutes: Routes = [
   {
@@ -22,6 +23,10 @@ const appRoutes: Routes = [
   {
     path: 'find',
     component: UserFinderComponent,
+  },
+  {
+    path: 'user/:id',
+    component: UserDetailsComponent
   }
 ];
 
