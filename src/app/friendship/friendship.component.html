@@ -1,1 +1,19 @@
-<p>friendship works!</p>
+<div>
+  <h3>Lista znajomych</h3>
+  <ul>
+    <li *ngFor="let friend of friends">
+      {{friend.displayName}}
+    </li>
+  </ul>
+</div>
+
+
+<div>
+  <h3>Zaproszenia do znajomych</h3>
+  <ul>
+    <li *ngFor="let friend of invitationsFriends">
+      {{friend.displayName}}
+    </li>
+  </ul>
+</div>
+

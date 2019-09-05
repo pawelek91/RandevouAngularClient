@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserFriendshipExtService extends ApiQueryService {
-  FriendshipQueryEndpoint = 'api/UserFriendship';
+  FriendshipQueryEndpoint =  ApiQueryService.ApiEndpoint + '/api/UserFriendship';
   GetFriendsListEnd = this.FriendshipQueryEndpoint + '/users/{id}/friends';
   GetFriendshipisRequestsEnd = this.FriendshipQueryEndpoint + '/users/{id}/requests';
   GetPossibleActionEnd = this.FriendshipQueryEndpoint + '/PossibleRequestsActions';
@@ -38,8 +38,8 @@ export class UserFriendshipExtService extends ApiQueryService {
     const apiKey = this.GetApiKey();
     let addHeaders = new HttpHeaders();
     addHeaders = addHeaders.append('Authorization', apiKey);
-    const endpoint = this.BuildAddress(this.GetFriendshipisRequestsEnd);
-    return this.client.put(endpoint, dto, {headers: addHeaders});
+    const endpoint = this.BuildAddress(this.SendInvitationEnd);
+    return this.client.put(endpoint, dto, {headers: addHeaders, observe: 'response'});
   }
 
   SetFriendshipStatusAction(dto: UpdateFriendshipStatusDto) {
@@ -47,6 +47,6 @@ export class UserFriendshipExtService extends ApiQueryService {
     let addHeaders = new HttpHeaders();
     addHeaders = addHeaders.append('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.SetFriendshipStatusEnd);
-    return this.client.put(endpoint, dto, {headers: addHeaders});
+    return this.client.put(endpoint, dto, {headers: addHeaders, observe: 'response'});
   }
 }

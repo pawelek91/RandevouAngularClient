@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserFinderComponent } from './user-finder/user-finder.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { FriendshipComponent } from './friendship/friendship.component';
 
 const appRoutes: Routes = [
   {
@@ -27,6 +28,10 @@ const appRoutes: Routes = [
   {
     path: 'user/:id',
     component: UserDetailsComponent
+  },
+  {
+    path: 'friends',
+    component: FriendshipComponent
   }
 ];
 

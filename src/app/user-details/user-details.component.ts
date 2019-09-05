@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UsersDetailsDto, UserFullDto } from '../services/users/UserDto';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
 import { ActivatedRoute } from '@angular/router';
+import { FriendshipService } from '../services/friendship/Friendship.service';
 
 @Component({
   selector: 'app-user-details',
@@ -19,15 +20,15 @@ export class UserDetailsComponent implements OnInit {
   userEyesColor: string;
   userHairColor: string;
   userInterests: Array<string>;
+  addFriendResult: string;
 
-  constructor(private route: ActivatedRoute, private usersService: UsersService) {
+  constructor(private route: ActivatedRoute, private usersService: UsersService, private friendshipService: FriendshipService) {
     this.userDto = {
       basic : {},
       details : { },
     };
 
     this.userInterests = new Array<string>();
-
   }
 
   ngOnInit() {
@@ -92,4 +93,11 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
+  SendFriendshipInvitation(id: number) {
+    this.friendshipService.SendInvitation(id).subscribe(result => {
+      this.addFriendResult = 'Wysłano zaproszenie';
+    }, error => {
+      this.addFriendResult = 'Nie udało się wysłać zaproszenia';
+    });
+  }
 }

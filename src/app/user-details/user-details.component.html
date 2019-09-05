@@ -1,8 +1,11 @@
-
+<ng-container *ngIf="addFriendResult !== undefined">
+{{addFriendResult}}
+</ng-container>
 <ng-container *ngIf="avatarBase64Str !== undefined && avatarBase64Str.length>0">
   <img src="{{avatarBase64Str}}">
 </ng-container>
 
+<a (click)="SendFriendshipInvitation(userDto.basic.id)">Dodaj do znajomych</a>
 <table style="width:100%">
   <tr>
     <th>Nazwa użytkownika</th>
