@@ -3,6 +3,7 @@
   <ul>
     <li *ngFor="let friend of friends">
       {{friend.displayName}}
+      <a (click)="deleteFriend(friend.id)">Usuń ze znajomych</a>
     </li>
   </ul>
 </div>
@@ -13,6 +14,8 @@
   <ul>
     <li *ngFor="let friend of invitationsFriends">
       {{friend.displayName}}
+      <a (click)="acceptFriendship(friend.id)">Zaakceptuj</a>
+      <a (click)="denyFriendship(friend.id)">Odrzuć</a>
     </li>
   </ul>
 </div>
