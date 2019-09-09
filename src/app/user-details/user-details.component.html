@@ -5,7 +5,10 @@
   <img src="{{avatarBase64Str}}">
 </ng-container>
 
-<a (click)="SendFriendshipInvitation(userDto.basic.id)">Dodaj do znajomych</a>
+<ng-container *ngIf="canSendInvitation">
+  <a (click)="SendFriendshipInvitation(userDto.basic.id)">Dodaj do znajomych</a>
+</ng-container>
+
 <table style="width:100%">
   <tr>
     <th>Nazwa użytkownika</th>

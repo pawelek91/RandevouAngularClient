@@ -21,6 +21,7 @@ export class UserDetailsComponent implements OnInit {
   userHairColor: string;
   userInterests: Array<string>;
   addFriendResult: string;
+  canSendInvitation: boolean;
 
   constructor(private route: ActivatedRoute, private usersService: UsersService, private friendshipService: FriendshipService) {
     this.userDto = {
@@ -38,7 +39,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getDictionariesData() {
-
       this.usersService.GetInterestsDictionary().subscribe(result => {
       this.interestsDict = result;
       this.interestsDict.forEach(x => {
@@ -50,6 +50,9 @@ export class UserDetailsComponent implements OnInit {
   getMyProfileData() {
     this.usersService.GetUserBasic(this.identity).subscribe(result => {
       this.userDto.basic = result;
+      this.friendshipService.CanSendInvitationToFriend(+this.identity).subscribe(qResult => {
+        this.canSendInvitation = qResult;
+      });
 
     }, (error) => {
       console.log(error);
@@ -96,6 +99,7 @@ export class UserDetailsComponent implements OnInit {
   SendFriendshipInvitation(id: number) {
     this.friendshipService.SendInvitation(id).subscribe(result => {
       this.addFriendResult = 'Wysłano zaproszenie';
+      this.canSendInvitation = false;
     }, error => {
       this.addFriendResult = 'Nie udało się wysłać zaproszenia';
     });

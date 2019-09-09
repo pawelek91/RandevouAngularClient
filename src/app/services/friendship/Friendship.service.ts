@@ -3,6 +3,7 @@ import { ApiQueryService } from '../external/api-query.service';
 import { UserFriendshipExtService } from '../external/UserFriendshipExt.service';
 import { Observable } from 'rxjs';
 import { FriendhsipSendRequestDto, UpdateFriendshipStatusDto, FriendshipStatusConsts } from './FriendshipRequestsDto';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,18 @@ export class FriendshipService {
   GetInvitations() {
     const loggedUserId = ApiQueryService.GetIdentity();
     return this.extService.GetFriendshipRequests(+loggedUserId);
+  }
+
+  CanSendInvitationToFriend(usrId: number) {
+    const loggedUserId = ApiQueryService.GetIdentity();
+    return this.extService.GetFriendshipStatus(+loggedUserId, usrId).pipe(map(
+      result => {
+        if (result === 'none' || result === 'None') {
+          return true;
+        }
+        return false;
+      }
+    ))
   }
 
 }

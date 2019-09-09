@@ -13,7 +13,7 @@ export class UserFriendshipExtService extends ApiQueryService {
   GetPossibleActionEnd = this.FriendshipQueryEndpoint + '/PossibleRequestsActions';
   SendInvitationEnd = this.FriendshipQueryEndpoint + '/Invitation';
   SetFriendshipStatusEnd = this.FriendshipQueryEndpoint + '/FriendshipStatusAction';
-
+  GetFriendshipStatusNend = this.FriendshipQueryEndpoint + '/users/{id}/RelationStatus/';
   constructor(private client: HttpClient) {
     super();
   }
@@ -48,5 +48,14 @@ export class UserFriendshipExtService extends ApiQueryService {
     addHeaders = addHeaders.append('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.SetFriendshipStatusEnd);
     return this.client.put(endpoint, dto, {headers: addHeaders, observe: 'response'});
+  }
+
+  GetFriendshipStatus(user1Id: number, user2Id: number) {
+    const apiKey = this.GetApiKey();
+    let endp = this.BuildAddress(this.GetFriendshipStatusNend, user1Id);
+    endp += user2Id;
+    let addHeaders = new HttpHeaders();
+    addHeaders = addHeaders.append('Authorization', apiKey);
+    return this.client.get<string>(endp, {headers: addHeaders, responseType: 'text' as 'json'});
   }
 }
