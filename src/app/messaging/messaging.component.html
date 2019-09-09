@@ -1,0 +1,25 @@
+<ng-container *ngIf="displayMessageForm">
+  Konwersacja z {{ speakerDto.displayName }}
+  <textarea [(ngModel)]="newMessageContent" id="newMessageContext" name="newMessageContent">
+
+  </textarea>
+  <ul>
+  <li *ngFor="let message of conversation">
+    {{message.senderName}} {{message.sendDate}}
+    <hr/>
+    {{message.content}}
+  </li>
+  </ul>
+</ng-container>
+
+<ng-container *ngIf="!displayMessageForm">
+Rozmowy
+<ul>
+  <li *ngFor="let message of lastMessages">
+          {{message.speakerName}} {{message.messageDate}}
+          <a (click)="goToConversation(message.speakerId)">Przejdź do rozmowy</a>
+          <hr/>
+          {{message.messageShortContent}}
+  </li>
+</ul>
+</ng-container>

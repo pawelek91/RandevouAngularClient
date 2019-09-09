@@ -13,6 +13,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserFinderComponent } from './user-finder/user-finder.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { FriendshipComponent } from './friendship/friendship.component';
+import { MessagingComponent } from './messaging/messaging.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { FriendshipComponent } from './friendship/friendship.component';
     MyProfileComponent,
     UserFinderComponent,
     UserDetailsComponent,
-    FriendshipComponent
+    FriendshipComponent,
+    MessagingComponent
   ],
   imports: [
     BrowserModule,
