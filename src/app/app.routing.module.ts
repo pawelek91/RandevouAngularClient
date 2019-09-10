@@ -6,6 +6,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserFinderComponent } from './user-finder/user-finder.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { FriendshipComponent } from './friendship/friendship.component';
+import { MessagingComponent } from './messaging/messaging.component';
 
 const appRoutes: Routes = [
   {
@@ -32,6 +33,14 @@ const appRoutes: Routes = [
   {
     path: 'friends',
     component: FriendshipComponent
+  },
+  {
+    path: 'messages/:id',
+    component: MessagingComponent
+  },
+  {
+    path: 'messages',
+    component: MessagingComponent
   }
 ];
 

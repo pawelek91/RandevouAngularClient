@@ -32,7 +32,7 @@ export class MessageExtService extends ApiQueryService {
     const apiKey = this.GetApiKey();
     let addHeaders = new HttpHeaders();
     addHeaders = addHeaders.append('Authorization', apiKey);
-    const endpoint = this.BuildAddress(this.ConversationsEndp, dto.firstUserId);
+    const endpoint = this.BuildAddress(this.WholeConversationEndp, dto.firstUserId);
     return this.httpClient.post<Array<MessageDto>>(endpoint, dto, {headers: addHeaders});
   }
 

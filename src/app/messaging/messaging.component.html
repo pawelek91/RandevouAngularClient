@@ -1,8 +1,13 @@
 <ng-container *ngIf="displayMessageForm">
+
   Konwersacja z {{ speakerDto.displayName }}
+
+  <form (ngSubmit)="sendMessage()" #myProfileFormRef="ngForm">
   <textarea [(ngModel)]="newMessageContent" id="newMessageContext" name="newMessageContent">
 
   </textarea>
+  <input type="submit" value="Wyślij">
+  </form>
   <ul>
   <li *ngFor="let message of conversation">
     {{message.senderName}} {{message.sendDate}}

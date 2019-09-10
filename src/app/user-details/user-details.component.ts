@@ -3,7 +3,7 @@ import { UsersService } from '../services/users/users.service';
 import { Observable } from 'rxjs';
 import { UsersDetailsDto, UserFullDto } from '../services/users/UserDto';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FriendshipService } from '../services/friendship/Friendship.service';
 
 @Component({
@@ -23,7 +23,8 @@ export class UserDetailsComponent implements OnInit {
   addFriendResult: string;
   canSendInvitation: boolean;
 
-  constructor(private route: ActivatedRoute, private usersService: UsersService, private friendshipService: FriendshipService) {
+  constructor(private route: ActivatedRoute, private router: Router,
+              private usersService: UsersService, private friendshipService: FriendshipService) {
     this.userDto = {
       basic : {},
       details : { },
@@ -64,14 +65,20 @@ export class UserDetailsComponent implements OnInit {
 
       if (this.userDto.details.eyesColor !== undefined) {
         this.usersService.GetEyesColorsDictionary().subscribe( ecd => {
-          this.userEyesColor = ecd.find(x => x.id === this.userDto.details.eyesColor).displayName;
+          const eyesColor = ecd.find(x => x.id === this.userDto.details.eyesColor);
+          if (eyesColor !== undefined) {
+            this.userEyesColor = eyesColor.displayName;
+          }
         });
       }
 
 
       if (this.userDto.details.hairColor !== undefined) {
         this.usersService.GetHairColorsDictionary().subscribe( hcd => {
-          this.userHairColor = hcd.find(x => x.id === this.userDto.details.hairColor).displayName;
+          const hairColors = hcd.find(x => x.id === this.userDto.details.hairColor);
+          if (hairColors !== undefined) {
+            this.userHairColor = hairColors.displayName;
+          }
         });
       }
 
@@ -103,5 +110,9 @@ export class UserDetailsComponent implements OnInit {
     }, error => {
       this.addFriendResult = 'Nie udało się wysłać zaproszenia';
     });
+  }
+
+  goToConversation(id: number) {
+    this.router.navigate(['/messages/' + id]);
   }
 }

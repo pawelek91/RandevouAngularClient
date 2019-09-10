@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FriendshipService } from '../services/friendship/Friendship.service';
 import { UsersService } from '../services/users/users.service';
 import { UserDto } from '../services/users/UserDto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-friendship',
@@ -13,7 +14,8 @@ export class FriendshipComponent implements OnInit {
   friends: Array<UserDto>;
   invitationsFriends: Array<UserDto>;
 
-  constructor(private friendshipService: FriendshipService, private  usersService: UsersService) {
+  constructor(private friendshipService: FriendshipService, private  usersService: UsersService,
+              private router: Router) {
     this.friends = new Array<UserDto>();
     this.invitationsFriends = new Array<UserDto>();
    }
@@ -76,6 +78,14 @@ export class FriendshipComponent implements OnInit {
     }, error => {
 
     });
+  }
+
+  goToConversation(id: number) {
+    this.router.navigate(['/messages/' + id]);
+  }
+
+  goToProfile(id: number) {
+    this.router.navigate(['/user/' + id]);
   }
 
 }

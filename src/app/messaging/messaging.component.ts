@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from '../services/message/Messages.service';
 import { LastMessageDto, MessageDto } from '../services/message/MessageDto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from '../services/users/UserDto';
 import { UsersService } from '../services/users/users.service';
 
@@ -19,7 +19,8 @@ export class MessagingComponent implements OnInit {
   speakerDto?: UserDto;
   conversation: Array<MessageDto>;
 
-  constructor(private route: ActivatedRoute, private messagesService: MessagesService, private usersService: UsersService) {
+  constructor(private route: ActivatedRoute, private router: Router,
+              private messagesService: MessagesService, private usersService: UsersService) {
     this.lastMessages = new Array<LastMessageDto>();
     this.conversation = new Array<MessageDto>();
    }
@@ -34,7 +35,9 @@ export class MessagingComponent implements OnInit {
       this.displayMessageForm = true;
       this.usersService.GetUserBasic(identity).subscribe(result => {
       this.speakerDto = result;
-      this.messagesService.GetConversation(result.id);
+      this.messagesService.GetConversation(result.id).subscribe(messages => {
+        this.conversation = messages;
+      });
       });
     }
   }
@@ -47,7 +50,7 @@ export class MessagingComponent implements OnInit {
     });
   }
 
-  sendMessage(userId: number) {
+  sendMessage() {
     if (this.speakerDto === null || this.speakerDto === undefined || this.speakerDto.id < 1) {
       return;
     }
@@ -59,7 +62,7 @@ export class MessagingComponent implements OnInit {
    }
 
    goToConversation(userId: number) {
-
+    this.router.navigate(['/messages/' + userId]);
    }
 
 }
