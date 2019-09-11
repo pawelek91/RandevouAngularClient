@@ -1,16 +1,26 @@
 <ng-container *ngIf="addFriendResult !== undefined">
 {{addFriendResult}}
 </ng-container>
+
+<div style="width: 60%">
 <ng-container *ngIf="avatarBase64Str !== undefined && avatarBase64Str.length>0">
-  <img src="{{avatarBase64Str}}">
+  <div style="height: 200px;">
+  <img src="{{avatarBase64Str}}" style="height: 80%; width: 80%; object-fit: scale-down;" >
+  <br/>
+  <p style="text-align:center">{{userDto.basic.displayName}}
+    </p>
+</div>
 </ng-container>
 
+<div>
 <ng-container *ngIf="canSendInvitation">
-  <a (click)="SendFriendshipInvitation(userDto.basic.id)">Dodaj do znajomych</a>
+  <a (click)="SendFriendshipInvitation(userDto.basic.id)" class="btn btn-success">Dodaj do znajomych</a>
 </ng-container>
 
-| <a (click)="goToConversation(userDto.basic.id)">Konwersacja</a> |
-<table style="width:100%">
+<a (click)="goToConversation(userDto.basic.id)" class="btn btn-info">Konwersacja</a>
+</div>
+
+<table  class="table">
   <tr>
     <th>Nazwa użytkownika</th>
     <td>{{userDto.basic.displayName}}</td>
@@ -58,3 +68,4 @@
     </td>
   </tr>
 </table>
+</div>

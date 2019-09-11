@@ -65,4 +65,8 @@ export class MessagingComponent implements OnInit {
     this.router.navigate(['/messages/' + userId]);
    }
 
+   gotoProfile(userId: number) {
+    this.router.navigate(['/user/' + userId]);
+   }
+
 }

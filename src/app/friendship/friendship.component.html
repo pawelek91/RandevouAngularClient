@@ -2,9 +2,12 @@
   <h3>Lista znajomych</h3>
   <ul>
     <li *ngFor="let friend of friends">
-      <a (click)="goToProfile(friend.id)"> {{friend.displayName}}</a>
-      | <a (click)="goToConversation(friend.id)">Konwersacja</a> |
-      <a (click)="deleteFriend(friend.id)">Usuń ze znajomych</a>
+      <a (click)="goToProfile(friend.id)" class="btn btn-link" name="profile" > {{friend.displayName}}</a>
+      <br/>
+      <div class="btn-group btn-group-justified">
+        <a (click)="goToConversation(friend.id)" class="btn btn-success">Konwersacja</a>
+        <a (click)="deleteFriend(friend.id)" class="btn btn-danger">Usuń ze znajomych</a>
+      </div>
     </li>
   </ul>
 </div>
@@ -14,9 +17,9 @@
   <h3>Zaproszenia do znajomych</h3>
   <ul>
     <li *ngFor="let friend of invitationsFriends">
-    <a (click)="goToProfile(friend.id)"> {{friend.displayName}}</a>
-      | <a (click)="acceptFriendship(friend.id)">Zaakceptuj</a> |
-      | <a (click)="denyFriendship(friend.id)">Odrzuć</a> |
+    <a (click)="goToProfile(friend.id)"  class="btn btn-link"> {{friend.displayName}}</a>
+      | <a (click)="acceptFriendship(friend.id)" class="btn btn-success" >Zaakceptuj</a> |
+      | <a (click)="denyFriendship(friend.id)" class="btn btn-danger">Odrzuć</a> |
 
       | <a (click)="goToConversation(friend.id)">Konwersacja</a> |
     </li>
