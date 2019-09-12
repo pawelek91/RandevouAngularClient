@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UsersAuthService } from '../services/users/usersAuth.service';
 import { NgForm } from '@angular/forms';
 import { ApiQueryService } from '../services/external/api-query.service';
+import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { QueryResult } from '../common/QueryResult';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +19,7 @@ export class LoginComponent implements OnInit {
   loginFailed: boolean;
   logged: boolean;
 
-  constructor(private usersService: UsersAuthService) {
+  constructor(private usersService: UsersAuthService, private router: Router ) {
     this.loginFailed = false;
     this.logged = false;
    }
@@ -30,20 +34,55 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginFormRef: NgForm) {
-      this.usersService.LoginUser(this.login, this.password).subscribe(result => {
-      this.logged = true;
-
+  this.usersService.LoginUserSimple(this.login, this.password).subscribe(result=>{
+  if (result.length > 0) {
+    this.usersService.ApplyLogin(result).subscribe(res=>{
+      localStorage.setItem('RANDEVOU_APIKEY', result);
+      localStorage.setItem('RANDEVOU_IDENTITY', res.toString());
       loginFormRef.resetForm();
-    }, (error) => {
-      ApiQueryService.ClearLoginInfos();
-      this.loginFailed = true;
-      console.log(error);
+      this.router.navigate(['/myProfile']);
     });
+  }
+}, error => {
+  console.log(error);
+});
+
+
+    // this.usersService.LoginUser(this.login, this.password).subscribe(res=>{
+
+    //   let x = res as Subscription;
+    //   let y = res as QueryResult;
+
+    //   });
+
+    //   if(res.isSuccess){
+    //   this.logged = true;
+
+    //   loginFormRef.resetForm();
+    //   this.router.navigate(['/myProfile']);
+    //   }
+    // }, (error) => {
+    //   ApiQueryService.ClearLoginInfos();
+    //   this.loginFailed = true;
+    //   console.log(error);
+    // });
+
+    //   this.usersService.LoginUser(this.login, this.password).pipe(map(result => {
+    //   this.logged = true;
+
+    //   loginFormRef.resetForm();
+    //   this.router.navigate(['/myProfile']);
+    // }, (error) => {
+    //   ApiQueryService.ClearLoginInfos();
+    //   this.loginFailed = true;
+    //   console.log(error);
+    // }));
   }
 
   logout() {
     this.usersService.LogoutUser();
     this.logged = false;
+    this.router.navigate(['/login']);
   }
 
 }

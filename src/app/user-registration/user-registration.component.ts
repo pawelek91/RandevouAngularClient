@@ -18,11 +18,7 @@ export class UserRegistrationComponent implements OnInit {
 
   constructor(private usersService: UsersAuthService, private router: Router) {
 
-    const identity = ApiQueryService.GetIdentity();
 
-    if (identity !== null || identity.length > 0) {
-    this.router.navigate(['/login']);
-    }
     this.registerDto = {
     };
     this.registerDto.userDto = { };
@@ -30,6 +26,12 @@ export class UserRegistrationComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log('registration');
+    const identity = ApiQueryService.GetIdentity();
+
+    if (identity !== null && identity.length > 0) {
+    this.router.navigate(['/login']);
+    }
   }
 
   onSubmit(registerFormRef: NgForm) {

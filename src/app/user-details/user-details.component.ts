@@ -5,6 +5,7 @@ import { UsersDetailsDto, UserFullDto } from '../services/users/UserDto';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FriendshipService } from '../services/friendship/Friendship.service';
+import { ApiQueryService } from '../services/external/api-query.service';
 
 @Component({
   selector: 'app-user-details',
@@ -29,6 +30,11 @@ export class UserDetailsComponent implements OnInit {
       basic : {},
       details : { },
     };
+
+    const identity = ApiQueryService.GetIdentity();
+    if (identity === undefined || identity === null || identity.length < 1) {
+      this.router.navigate(['/login']);
+      }
 
     this.userInterests = new Array<string>();
   }

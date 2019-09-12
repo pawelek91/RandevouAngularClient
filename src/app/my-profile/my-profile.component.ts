@@ -9,6 +9,7 @@ import { ApiQueryService } from '../services/external/api-query.service';
 import { Router } from '@angular/router';
 import { pluck } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -27,13 +28,12 @@ export class MyProfileComponent implements OnInit {
   eyesColorsDict: Array<DictionaryItemDto>;
   interestsDict: Array<DictionaryItemDto>;
 
-  constructor(private usersService: UsersService, router: Router) {
+  constructor(private usersService: UsersService, private router: Router ) {
     this.identity = ApiQueryService.GetIdentity();
 
     if (this.identity.length < 1) {
-      router.navigate(['/login']);
+      this.router.navigate(['/login']);
     } else {
-
     this.userDto = {
       basic : {},
       details : { },
@@ -45,11 +45,15 @@ export class MyProfileComponent implements OnInit {
 
     this.getDictionariesData();
     this.getMyProfileData();
-    }
-   }
+  }
+  }
 
   ngOnInit() {
+    if (this.identity.length < 1) {
+      this.router.navigate(['/login']);
+    }
     this.fillUserDetailsDictionary();
+
   }
 
   getDictionariesData() {

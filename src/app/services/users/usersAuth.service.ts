@@ -51,23 +51,38 @@ export class UsersAuthService {
     });
    }
 
+LoginUserSimple(userName: string, password: string){
+
+    const dto: ApiAuthDto = {UserName: userName, Password: password};
+    return this.authService.LoginUser(dto);
+}
+
+ApplyLogin(authKey: string) {
+  return this.GetIdentity(authKey);
+}
+
    LoginUser(userName: string, password: string) {
      const dto: ApiAuthDto = {UserName: userName, Password: password};
      return this.authService.LoginUser(dto).pipe(map(result => {
-      const queryResult = new QueryResult();
+
 
       if (result.length > 0) {
-        queryResult.isSuccess = true;
-        this.GetIdentity(result).subscribe(resultId => {
+
+        return this.GetIdentity(result).subscribe(resultId => {
+          const queryResult = new QueryResult();
+          queryResult.isSuccess = true;
           const userIdentity = resultId;
           localStorage.setItem('RANDEVOU_APIKEY', result);
           localStorage.setItem('RANDEVOU_IDENTITY', userIdentity.toString());
+          return queryResult;
         });
       } else {
+        const queryResult = new QueryResult();
         queryResult.isSuccess = false;
         queryResult.message = 'Nie udało się zalogować';
+        return queryResult;
       }
-      return queryResult;
+
      }));
   }
 

@@ -2,27 +2,41 @@
   Nie udało się zaktualizować profilu.
 </ng-container>
 
-<label class="image-upload-container btn btn-bwm">
-    <span>Avatar</span>
-    <input #imageInput
-           type="file"
-           accept="image/*"
-           (change)="processFile(imageInput)">
-  </label>
 
-  <ng-container *ngIf="myProfileAvatar !== undefined && myProfileAvatar.length>0">
-    <img src="{{myProfileAvatar}}">
-  </ng-container>
+<div class="form-group" style="height: 300px; align-content: center">
+    <img src="{{myProfileAvatar}}" style="height: 80%; width: 80%; object-fit: scale-down;" >
+    <br/>
+    <p style="text-align:center">
+      <label class="image-upload-container btn btn-bwm">
+        <span>Avatar</span>
+        <br/>
+        <input #imageInput
+               type="file"
+               accept="image/*"
+               (change)="processFile(imageInput)">
+      </label>
+      </p>
+</div>
 
+
+
+
+<div>
 <form (ngSubmit)="onSubmit(myProfileFormRef)" #myProfileFormRef="ngForm">
-  <div style="display: inline-grid ">
-  <label for="name">Nazwa użytkownika</label>
-  <input type="text" id="userName" name="userName" [(ngModel)]="userDto.basic.name">
+  <div class="form-row">
 
+
+  <div class="form-group col-md-6">
+    <label for="userName">Nazwa użytkownika</label>
+    <input type="text" id="userName" name="userName" [(ngModel)]="userDto.basic.name">
+  </div>
+
+  <div class="form-group col-md-6">
       <label for="name">Nazwa wyświetlana</label>
       <input type="text" id="displayName" name="displayName" [(ngModel)]="userDto.basic.displayName">
-
-
+  </div>
+</div>
+      <div class="form-group">
       <label for="birthDate">Data urodzin</label>
       <input class="form-control" placeholder="yyyy-mm-dd"
              name="dp" [(ngModel)]="newBirthDate" ngbDatepicker #d="ngbDatepicker">
@@ -31,37 +45,57 @@
                 Wybierz
               </button>
             </div>
+      </div>
 
+    <div class="form-group">
       <label for="gender">Płeć</label>
       <select [(ngModel)]="userDto.basic.gender"  id="gender" name="gender">
         <option value="m">Mężczyzna</option>
         <option value="f">Kobieta</option>
       </select>
+    </div>
 
-      <label for="city">Miasto</label>
-      <input type="text" id="city" name="city" [(ngModel)]="userDto.details.city" >
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="city">Miasto</label>
+        <input type="text" id="city" name="city" [(ngModel)]="userDto.details.city" >
+      </div>
 
-      <label for="region">Województwo</label>
-      <input type="text" id="region" name="region" [(ngModel)]="userDto.details.region" >
+      <div class="form-group col-md-6">
+        <label for="region">Województwo</label>
+        <input type="text" id="region" name="region" [(ngModel)]="userDto.details.region" >
+      </div>
+    </div>
 
+  <div class="form-row">
+    <div class="form-group col-md-6">
       <label for="width">Wzrost</label>
       <input type="text" id="width" name="width" [(ngModel)]="userDto.details.width" >
+    </div>
 
+    <div class="form-group col-md-6">
       <label for="heigth">Waga</label>
       <input type="text" id="heigth" name="heigth" [(ngModel)]="userDto.details.heigth" >
+    </div>
+  </div>
 
-
+  <div class="form-row">
+    <div class="form-group col-md-6">
       <label for="eyesColor">Kolor oczu</label>
       <select [(ngModel)]="userDto.details.eyesColor"  id="eyesColor" name="eyesColor">
         <option *ngFor="let ec of eyesColorsDict" [ngValue]="ec?.id"> {{ec?.displayName}}</option>
       </select>
+    </div>
 
-
+    <div class="form-group col-md-6">
       <label for="hairColor">Kolor włosów</label>
       <select [(ngModel)]="userDto.details.hairColor"  id="hairHolor" name="hairColor">
         <option *ngFor="let hc of hairColorsDict" [ngValue]="hc?.id"> {{hc?.displayName}}</option>
       </select>
+    </div>
 
+  </div>
+  <div class="form-group">
       <label for="interest">Zainteresowania</label>
       <ul>
         <li *ngFor="let interest of interestsDict; let i = index">
@@ -71,9 +105,8 @@
           </label>
         </li>
       </ul>
-
+  </div>
   <button type="submit">Zapisz zmiany</button>
-</div>
 
 <form (ngSubmit)="onChangePassword(changePasswordFormRef)" #changePasswordFormRef="ngForm">
 
@@ -81,3 +114,4 @@
     <input type="password" id="password" name="password" [(ngModel)]="newPassword">
 </form>
 </form>
+</div>

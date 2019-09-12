@@ -3,6 +3,7 @@ import { FriendshipService } from '../services/friendship/Friendship.service';
 import { UsersService } from '../services/users/users.service';
 import { UserDto } from '../services/users/UserDto';
 import { Router } from '@angular/router';
+import { ApiQueryService } from '../services/external/api-query.service';
 
 @Component({
   selector: 'app-friendship',
@@ -18,6 +19,13 @@ export class FriendshipComponent implements OnInit {
               private router: Router) {
     this.friends = new Array<UserDto>();
     this.invitationsFriends = new Array<UserDto>();
+
+    const identity = ApiQueryService.GetIdentity();
+    if (identity.length < 1) {
+      router.navigate(['/login']);
+    }
+
+
    }
 
   ngOnInit() {

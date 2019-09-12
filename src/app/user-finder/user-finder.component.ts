@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { UserDto } from '../services/users/UserDto';
 import { UsersService } from '../services/users/users.service';
 import { DictionaryItemDto } from '../common/DictionaryItemDto';
+import { ApiQueryService } from '../services/external/api-query.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-finder',
@@ -21,7 +23,11 @@ export class UserFinderComponent implements OnInit {
   hairsDictionary: Array<DictionaryItemDto>;
   eyesDictionary: Array<DictionaryItemDto>;
 
-  constructor(private searchService: SearchUsersService, private usersService: UsersService) {
+  constructor(private searchService: SearchUsersService, private usersService: UsersService, private router: Router) {
+    const identity = ApiQueryService.GetIdentity();
+    if (identity.length < 1) {
+      router.navigate(['/login']);
+    }
     this.queryDto = new SearchQueryDto();
     this.searchResult = new Array<UserDto>();
 

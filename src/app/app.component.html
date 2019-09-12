@@ -1,15 +1,30 @@
-<nav>
-  <a class="btn btn-outline-primary" [routerLink]="['/register']" routerLinkActive="router-link-active">Register</a>
-  <a class="btn btn-outline-primary" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
-</nav>
 
-<hr/>
-<nav>
-  <a class="btn btn-outline-primary" [routerLink]="['/myProfile']" routerLinkActive="router-link-active">My profile</a>
-  <a class="btn btn-outline-primary" [routerLink]="['/friends']" routerLinkActive="router-link-active">Friends</a>
-  <a class="btn btn-outline-primary" [routerLink]="['/messages']" routerLinkActive="router-link-active">Messages</a>
-  <a class="btn btn-outline-primary" [routerLink]="['/find']" routerLinkActive="router-link-active">Find users</a>
 
-</nav>
-
+<ng-container *ngIf="!logged">
+  <nav>
+    <a class="btn btn-outline-primary" [routerLink]="['/register']" routerLinkActive="router-link-active">Register</a>
+    <a class="btn btn-outline-primary" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
+  </nav>
 <router-outlet></router-outlet>
+</ng-container>
+
+
+<ng-container *ngIf="logged">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+    <a class="btn btn-outline-primary" [routerLink]="['/myProfile']" routerLinkActive="router-link-active">My profile</a>
+    <a class="btn btn-outline-primary" [routerLink]="['/friends']" routerLinkActive="router-link-active">Friends</a>
+    <a class="btn btn-outline-primary" [routerLink]="['/messages']" routerLinkActive="router-link-active">Messages</a>
+    <a class="btn btn-outline-primary" [routerLink]="['/find']" routerLinkActive="router-link-active">Find users</a>
+  </div>
+
+  <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
+    <a class="btn btn-outline-danger" type="button" (click)="logout()">Wyloguj</a>
+  </div>
+</nav>
+
+<div class="container" style="width:70%; margin-top: 10px;">
+    <router-outlet></router-outlet>
+    </div>
+
+</ng-container>
