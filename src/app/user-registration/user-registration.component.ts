@@ -5,6 +5,7 @@ import { UserCreateDto } from '../services/users/UserDto';
 import { take, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ApiQueryService } from '../services/external/api-query.service';
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -26,12 +27,7 @@ export class UserRegistrationComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('registration');
-    const identity = ApiQueryService.GetIdentity();
 
-    if (identity !== null && identity.length > 0) {
-    this.router.navigate(['/login']);
-    }
   }
 
   onSubmit(registerFormRef: NgForm) {

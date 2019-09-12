@@ -1,6 +1,8 @@
+<!-- <hr/>
+<app-navbar></app-navbar>
+<hr/> -->
 
-
-<ng-container *ngIf="!logged">
+<ng-container *ngIf="!navbar.logged">
   <nav>
     <a class="btn btn-outline-primary" [routerLink]="['/register']" routerLinkActive="router-link-active">Register</a>
     <a class="btn btn-outline-primary" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
@@ -9,7 +11,7 @@
 </ng-container>
 
 
-<ng-container *ngIf="logged">
+<ng-container *ngIf="navbar.logged">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
     <a class="btn btn-outline-primary" [routerLink]="['/myProfile']" routerLinkActive="router-link-active">My profile</a>

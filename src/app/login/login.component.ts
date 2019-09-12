@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { QueryResult } from '../common/QueryResult';
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -19,9 +20,10 @@ export class LoginComponent implements OnInit {
   loginFailed: boolean;
   logged: boolean;
 
-  constructor(private usersService: UsersAuthService, private router: Router ) {
+  constructor(private usersService: UsersAuthService, private router: Router, public navbar: NavbarService ) {
     this.loginFailed = false;
     this.logged = false;
+    this.navbar.show();
    }
 
   ngOnInit() {
@@ -30,6 +32,10 @@ export class LoginComponent implements OnInit {
       this.logged = false;
     } else {
       this.logged = true;
+    }
+
+    if (this.logged){
+      this.router.navigate(['/myProfile']);
     }
   }
 
@@ -40,44 +46,13 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('RANDEVOU_APIKEY', result);
       localStorage.setItem('RANDEVOU_IDENTITY', res.toString());
       loginFormRef.resetForm();
-      this.router.navigate(['/myProfile']);
+      window.location.reload();
     });
   }
 }, error => {
   console.log(error);
 });
-
-
-    // this.usersService.LoginUser(this.login, this.password).subscribe(res=>{
-
-    //   let x = res as Subscription;
-    //   let y = res as QueryResult;
-
-    //   });
-
-    //   if(res.isSuccess){
-    //   this.logged = true;
-
-    //   loginFormRef.resetForm();
-    //   this.router.navigate(['/myProfile']);
-    //   }
-    // }, (error) => {
-    //   ApiQueryService.ClearLoginInfos();
-    //   this.loginFailed = true;
-    //   console.log(error);
-    // });
-
-    //   this.usersService.LoginUser(this.login, this.password).pipe(map(result => {
-    //   this.logged = true;
-
-    //   loginFormRef.resetForm();
-    //   this.router.navigate(['/myProfile']);
-    // }, (error) => {
-    //   ApiQueryService.ClearLoginInfos();
-    //   this.loginFailed = true;
-    //   console.log(error);
-    // }));
-  }
+}
 
   logout() {
     this.usersService.LogoutUser();

@@ -8,6 +8,7 @@ import { Observable, fromEvent } from 'rxjs';
 import { ApiQueryService } from '../services/external/api-query.service';
 import { Router } from '@angular/router';
 import { pluck } from 'rxjs/operators';
+import { NavbarService } from '../services/navbar.service';
 
 
 @Component({
@@ -28,8 +29,9 @@ export class MyProfileComponent implements OnInit {
   eyesColorsDict: Array<DictionaryItemDto>;
   interestsDict: Array<DictionaryItemDto>;
 
-  constructor(private usersService: UsersService, private router: Router ) {
+  constructor(private usersService: UsersService, private router: Router, public nav: NavbarService ) {
     this.identity = ApiQueryService.GetIdentity();
+    this.nav.show();
 
     if (this.identity.length < 1) {
       this.router.navigate(['/login']);
