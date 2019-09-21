@@ -1,8 +1,8 @@
 <ng-container *ngIf="displayMessageForm">
 
-  <h3>Konwersacja z
-    <a (click)="gotoProfile(speakerDto.id)" class="btn btn-info">{{ speakerDto.displayName }} </a>
-  </h3>
+
+ <app-user-details-short [userId]='speakerDto.id'></app-user-details-short>
+
 
   <form (ngSubmit)="sendMessage()" #myProfileFormRef="ngForm">
 
@@ -29,10 +29,12 @@
 <ng-container *ngIf="!displayMessageForm">
 <h3>Rozmowy</h3>
 
+
 <table class="table table-striped">
     <tbody>
         <tr *ngFor="let message of lastMessages">
             <td>
+              <div>  <app-user-details-short [userId]='message.speakerId'></app-user-details-short></div>
                 <div> {{message.speakerName}}  <i>({{message.messageDate | date:'medium' }})</i></div>
                 <div> {{message.messageShortContent}} </div>
                 <div>

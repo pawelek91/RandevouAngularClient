@@ -1,3 +1,7 @@
+<ng-container *ngIf="displayShort">
+  <app-user-details-short [userId]='displayShortUserId'></app-user-details-short>
+</ng-container>
+
 <form (ngSubmit)="onSubmit(searchFormRef)" #searchFormRef="ngForm">
   <div style="display: inline-grid ">
 
@@ -92,7 +96,7 @@
        {{dto.displayName}} </a></td>
       <td>Płeć: {{dto.gender}}</td>
       <td>Data urodzenia: {{dto.birthDate}}</td>
-
+      <a (click)="displayUser(dto.id)">Podgląd</a>
     </tr>
   </table>
 </ng-container>

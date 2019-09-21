@@ -18,6 +18,8 @@ export class UserFinderComponent implements OnInit {
   queryDto: SearchQueryDto;
   searchAttemp = false;
   searchResult: Array<UserDto>;
+  displayShort: boolean;
+  displayShortUserId: number;
 
   interestDictionary: Array<DictionaryItemDto>;
   hairsDictionary: Array<DictionaryItemDto>;
@@ -71,6 +73,11 @@ export class UserFinderComponent implements OnInit {
 
       });
     });
+  }
+
+  displayUser(id: number) {
+    this.displayShort = true;
+    this.displayShortUserId = id;
   }
 
 }

@@ -14,6 +14,7 @@ import { UserFinderComponent } from './user-finder/user-finder.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { FriendshipComponent } from './friendship/friendship.component';
 import { MessagingComponent } from './messaging/messaging.component';
+import { UserDetailsShortComponent } from './user-details-short/user-details-short.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MessagingComponent } from './messaging/messaging.component';
     UserDetailsComponent,
     FriendshipComponent,
     MessagingComponent,
+    UserDetailsShortComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,9 @@ export class MessagingComponent implements OnInit {
   displayMessageForm: boolean;
   speakerDto?: UserDto;
   conversation: Array<MessageDto>;
+  displayShort: boolean;
+  displayShortUserId: number;
+
 
   constructor(private route: ActivatedRoute, private router: Router,
               private messagesService: MessagesService, private usersService: UsersService) {
@@ -68,5 +71,10 @@ export class MessagingComponent implements OnInit {
    gotoProfile(userId: number) {
     this.router.navigate(['/user/' + userId]);
    }
+
+   displayUser(id: number) {
+    this.displayShort = true;
+    this.displayShortUserId = id;
+  }
 
 }
