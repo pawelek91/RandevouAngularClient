@@ -50,42 +50,28 @@ export class FriendshipComponent implements OnInit {
   acceptFriendship(id: number) {
     this.friendshipService.AcceptInvitation(id)
     .subscribe(result => {
-
-      if (!result.ok || result.status !== 200) {
-        throw Error;
-      }
-
       const addedFriend = this.invitationsFriends.find(x => x.id === id);
       this.friends.push(addedFriend);
       this.invitationsFriends = this.invitationsFriends.filter(x => x.id !== id);
     }, error => {
-
+      console.log(error);
     });
   }
 
   deleteFriend(id: number) {
     this.friendshipService.DeclineInvitation(id).subscribe(result => {
-
-      if (!result.ok || result.status !== 200) {
-        throw Error;
-      }
-
       this.friends = this.friends.filter(x => x.id !== id);
     }, error => {
-
+      console.log(error);
     });
   }
 
   denyFriendship(id: number) {
     this.friendshipService.DeclineInvitation(id).subscribe(result => {
 
-      if (!result.ok || result.status !== 200) {
-        throw Error;
-      }
-
       this.invitationsFriends = this.invitationsFriends.filter(x => x.id !== id);
     }, error => {
-
+      console.log(error);
     });
   }
 

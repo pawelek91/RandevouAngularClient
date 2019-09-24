@@ -39,7 +39,7 @@ export class ApiQueryService {
     return apiKey;
   }
 
-  Post<T>(endpoint: string, dto: any, authorization?: true): Observable<T> {
+  Post<T>(endpoint: string, dto: any, authorization: boolean = true): Observable<T> {
     const apiKey = this.GetApiKey();
 
     if (authorization) {
@@ -54,7 +54,7 @@ export class ApiQueryService {
     }
   }
 
-  Get<T>(endpoint: string, authorization?: true): Observable<T> {
+  Get<T>(endpoint: string, authorization: boolean = true): Observable<T> {
     const apiKey = this.GetApiKey();
 
     if (authorization) {
@@ -69,7 +69,7 @@ export class ApiQueryService {
     }
   }
 
-  Patch<T>(endpoint: string, dto: any, authorization?: true): Observable<T> {
+  Patch<T>(endpoint: string, dto: any,  authorization: boolean = true): Observable<T> {
     const apiKey = this.GetApiKey();
 
     if (authorization) {
@@ -84,7 +84,7 @@ export class ApiQueryService {
     }
   }
 
-  Set<T>(endpoint: string, dto: any, authorization?: true): Observable<T> {
+  Set<T>(endpoint: string, dto: any, authorization: boolean = true): Observable<T> {
     const apiKey = this.GetApiKey();
 
     if (authorization) {

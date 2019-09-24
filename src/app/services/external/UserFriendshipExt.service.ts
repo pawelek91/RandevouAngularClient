@@ -20,7 +20,7 @@ export class UserFriendshipExtService extends ApiQueryService {
 
   GetFriends(id: number) {
     const endpoint = this.BuildAddress(this.GetFriendsListEnd, id);
-    this.Get<Array<number>>(endpoint);
+    return this.Get<Array<number>>(endpoint);
   }
 
   // GetFriends(id: number) {

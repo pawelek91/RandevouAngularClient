@@ -37,7 +37,7 @@ GetInterestsDictionary() {
 
 PatchUserData(dto: UserFullDto) {
   const queryResult = new QueryResult();
-  return this.usersQuery.PatchUserBasicData(dto.basic.id, dto.basic).pipe(map(result => {
+  return this.usersQuery.PatchUserBasicData(dto.basic).pipe(map(result => {
     if (result) {
       this.usersQuery.PutUserDetails(dto.basic.id, dto.details).subscribe(secondResult => {
         if (secondResult) {
