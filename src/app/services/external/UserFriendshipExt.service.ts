@@ -72,10 +72,10 @@ export class UserFriendshipExtService extends ApiQueryService {
   GetFriendshipStatus(user1Id: number, user2Id: number) {
     let endp = this.BuildAddress(this.GetFriendshipStatusNend, user1Id);
     endp += user2Id;
-    return this.Get<string>(endp); // responseType: 'text' as 'json'});
+    return this.Get<string>(endp, true, true); // responseType: 'text' as 'json'});
   }
 
-  // GetFriendshipStatus(user1Id: number, user2Id: number) {
+  // GetFriendshipStatus2(user1Id: number, user2Id: number) {
   //   const apiKey = this.GetApiKey();
   //   let endp = this.BuildAddress(this.GetFriendshipStatusNend, user1Id);
   //   endp += user2Id;

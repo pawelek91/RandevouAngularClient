@@ -39,64 +39,90 @@ export class ApiQueryService {
     return apiKey;
   }
 
-  Post<T>(endpoint: string, dto: any, authorization: boolean = true): Observable<T> {
-    const apiKey = this.GetApiKey();
+  Post<T>(endpoint: string, dto: any, authorization: boolean = true, responseTypeText = false): Observable<T> {
+    const opts = this.GenerateHttpOptions(authorization, responseTypeText);
+    return this.client.post(endpoint, dto, opts).pipe(map(result => {
+      return result as T;
+    }));
 
-    if (authorization) {
-      const addHeaders = new HttpHeaders().set('Authorization', apiKey);
-      return this.client.post(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
-        return result as T;
-      }));
-    } else {
-      return this.client.post(endpoint, dto).pipe(map(result => {
-        return result as T;
-      }));
-    }
+    // const apiKey = this.GetApiKey();
+
+    // if (authorization) {
+    //   const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+    //   return this.client.post(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
+    //     return result as T;
+    //   }));
+    // } else {
+    //   return this.client.post(endpoint, dto).pipe(map(result => {
+    //     return result as T;
+    //   }));
+    // }
   }
 
-  Get<T>(endpoint: string, authorization: boolean = true): Observable<T> {
-    const apiKey = this.GetApiKey();
-
-    if (authorization) {
-      const addHeaders = new HttpHeaders().set('Authorization', apiKey);
-      return this.client.get<T>(endpoint, {headers: addHeaders}).pipe(map(result => {
+  Get<T>(endpoint: string, authorization = true, responseTypeText = false): Observable<T> {
+    const opts = this.GenerateHttpOptions(authorization, responseTypeText);
+    return this.client.get<T>(endpoint, opts ).pipe(map(result => {
         return result;
       }));
-    } else {
-      return this.client.get<T>(endpoint).pipe(map(result => {
-        return result;
-      }));
-    }
   }
 
-  Patch<T>(endpoint: string, dto: any,  authorization: boolean = true): Observable<T> {
-    const apiKey = this.GetApiKey();
 
-    if (authorization) {
-      const addHeaders = new HttpHeaders().set('Authorization', apiKey);
-      return this.client.post(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
-        return result as T;
-      }));
-    } else {
-      return this.client.post(endpoint, dto).pipe(map(result => {
-        return result as T;
-      }));
-    }
+  Patch<T>(endpoint: string, dto: any,  authorization= true, responseTypeText = false): Observable<T> {
+    const opts = this.GenerateHttpOptions(authorization, responseTypeText);
+    return this.client.post(endpoint, dto, opts).pipe(map(result => {
+      return result as T;
+    }));
+
+    // const apiKey = this.GetApiKey();
+
+    // if (authorization) {
+    //   const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+    //   return this.client.post(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
+    //     return result as T;
+    //   }));
+    // } else {
+    //   return this.client.post(endpoint, dto).pipe(map(result => {
+    //     return result as T;
+    //   }));
+    // }
   }
 
-  Set<T>(endpoint: string, dto: any, authorization: boolean = true): Observable<T> {
-    const apiKey = this.GetApiKey();
+  Set<T>(endpoint: string, dto: any, authorization = true, responseTypeText = false): Observable<T> {
+    const opts = this.GenerateHttpOptions(authorization, responseTypeText);
+    return this.client.put(endpoint, dto, opts).pipe(map(result => {
+      return result as T;
+    }));
 
+    // const apiKey = this.GetApiKey();
+
+    // if (authorization) {
+    //   const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+    //   return this.client.put(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
+    //     return result as T;
+    //   }));
+    // } else {
+    //   return this.client.put(endpoint, dto).pipe(map(result => {
+    //     return result as T;
+    //   }));
+    // }
+  }
+
+  GenerateHttpOptions(authorization: boolean, responseTypeText: boolean) {
+    let addHeaders: HttpHeaders = new HttpHeaders();
     if (authorization) {
-      const addHeaders = new HttpHeaders().set('Authorization', apiKey);
-      return this.client.put(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
-        return result as T;
-      }));
-    } else {
-      return this.client.put(endpoint, dto).pipe(map(result => {
-        return result as T;
-      }));
+      const apiKey = this.GetApiKey();
+      addHeaders = addHeaders.append('Authorization', apiKey);
     }
+
+    const httpOptions = {
+      headers: addHeaders,
+      responseType:  'json' as 'json',
+    };
+
+    if (responseTypeText) {
+      httpOptions.responseType = 'text' as 'json';
+    }
+    return httpOptions;
   }
 
 
