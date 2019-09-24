@@ -15,37 +15,48 @@ export class DictionaryItemsService extends ApiQueryService {
   HairColorsEnd = ApiQueryService.ApiEndpoint + '/api/UserDictItems/HairColors';
   EyesColorsEnd = ApiQueryService.ApiEndpoint + '/api/UserDictItems/EyesColors';
 
-constructor(private httpClient: HttpClient ) {
-  super();
+constructor(httpClient: HttpClient ) {
+  super(httpClient);
 }
 
 GetAllInterests(): Observable<DictionaryItemDto[]> {
-  const apiKey = this.GetApiKey();
-  let addHeaders = new HttpHeaders();
-  addHeaders = addHeaders.append('Authorization', apiKey);
-
-  return this.httpClient.get<DictionaryItemDto[]>(this.InterestsEnd, {headers: addHeaders}).pipe(map(result => {
-    return result;
-  }));
+  return this.Get<DictionaryItemDto[]>(this.InterestsEnd);
 }
 
+// GetAllInterests(): Observable<DictionaryItemDto[]> {
+//   const apiKey = this.GetApiKey();
+//   let addHeaders = new HttpHeaders();
+//   addHeaders = addHeaders.append('Authorization', apiKey);
+
+//   return this.httpClient.get<DictionaryItemDto[]>(this.InterestsEnd, {headers: addHeaders}).pipe(map(result => {
+//     return result;
+//   }));
+// }
 GetAllHairColors(): Observable<DictionaryItemDto[]> {
-  const apiKey = this.GetApiKey();
-  let addHeaders = new HttpHeaders();
-  addHeaders = addHeaders.append('Authorization', apiKey);
-  return this.httpClient.get<DictionaryItemDto[]>(this.HairColorsEnd, {headers: addHeaders}).pipe(map(result => {
-    return result;
-  }));
+  return this.Get<DictionaryItemDto[]>(this.HairColorsEnd);
 }
+
+// GetAllHairColors(): Observable<DictionaryItemDto[]> {
+//   const apiKey = this.GetApiKey();
+//   let addHeaders = new HttpHeaders();
+//   addHeaders = addHeaders.append('Authorization', apiKey);
+//   return this.httpClient.get<DictionaryItemDto[]>(this.HairColorsEnd, {headers: addHeaders}).pipe(map(result => {
+//     return result;
+//   }));
+// }
 
 GetAllEyesColor(): Observable<DictionaryItemDto[]> {
-  const apiKey = this.GetApiKey();
-  let addHeaders = new HttpHeaders();
-  addHeaders = addHeaders.append('Authorization', apiKey);
-  return this.httpClient.get<DictionaryItemDto[]>(this.EyesColorsEnd, {headers: addHeaders}).pipe(map(result => {
-    return result;
-  }));
+  return this.Get<DictionaryItemDto[]>(this.EyesColorsEnd);
 }
+
+// GetAllEyesColor(): Observable<DictionaryItemDto[]> {
+//   const apiKey = this.GetApiKey();
+//   let addHeaders = new HttpHeaders();
+//   addHeaders = addHeaders.append('Authorization', apiKey);
+//   return this.httpClient.get<DictionaryItemDto[]>(this.EyesColorsEnd, {headers: addHeaders}).pipe(map(result => {
+//     return result;
+//   }));
+// }
 
 
 

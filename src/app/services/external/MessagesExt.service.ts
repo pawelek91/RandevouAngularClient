@@ -16,31 +16,46 @@ export class MessageExtService extends ApiQueryService {
   WholeConversationEndp = this.MessagesEndp + '/Conversation';
   MessageMarkReadEndp = this.MessagesEndp + '/MarkRead';
   MessageMarkUnreadEndp = this.MessagesEndp + '/MarkUnread';
-  constructor(private httpClient: HttpClient) {
-    super();
+
+  constructor(httpClient: HttpClient) {
+    super(httpClient);
   }
 
   GetLastMessages(userId: number): Observable<Array<LastMessageDto>> {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.ConversationsEndp, userId);
-    return this.httpClient.get<Array<LastMessageDto>>(endpoint, {headers: addHeaders});
+    return this.Get<Array<LastMessageDto>>(endpoint);
   }
+
+  // GetLastMessages(userId: number): Observable<Array<LastMessageDto>> {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
+  //   const endpoint = this.BuildAddress(this.ConversationsEndp, userId);
+  //   return this.httpClient.get<Array<LastMessageDto>>(endpoint, {headers: addHeaders});
+  // }
 
   GetConversation(dto: RequestMessagesDto): Observable<Array<MessageDto>> {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.WholeConversationEndp, dto.firstUserId);
-    return this.httpClient.post<Array<MessageDto>>(endpoint, dto, {headers: addHeaders});
+    return this.Post<Array<MessageDto>>(endpoint, dto);
   }
+  // GetConversation(dto: RequestMessagesDto): Observable<Array<MessageDto>> {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
+  //   const endpoint = this.BuildAddress(this.WholeConversationEndp, dto.firstUserId);
+  //   return this.httpClient.post<Array<MessageDto>>(endpoint, dto, {headers: addHeaders});
+  // }
 
   SendMessage(dto: MessageDto) {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.MessagesEndp);
-    return this.httpClient.post<Array<MessageDto>>(endpoint, dto, {headers: addHeaders});
+    return this.Post<Array<MessageDto>>(endpoint, dto);
   }
+
+  // SendMessage(dto: MessageDto) {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
+  //   const endpoint = this.BuildAddress(this.MessagesEndp);
+  //   return this.httpClient.post<Array<MessageDto>>(endpoint, dto, {headers: addHeaders});
+  // }
 }
