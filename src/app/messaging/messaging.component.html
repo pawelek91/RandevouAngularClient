@@ -1,8 +1,8 @@
 <ng-container *ngIf="displayMessageForm">
 
-
+  <ng-container *ngIf="speakerDto != null">
  <app-user-details-short [userId]='speakerDto.id'></app-user-details-short>
-
+</ng-container>
 
   <form (ngSubmit)="sendMessage()" #myProfileFormRef="ngForm">
 

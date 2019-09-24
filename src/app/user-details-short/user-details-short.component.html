@@ -2,8 +2,8 @@
 <div style="border: 1px soild dashed">
 <div style="width: 100px; float:left; height:200px; margin:10px">
 <h4><p style="text-align:center">
-    <a (click)="gotoProfile(shortDto.id)" class="btn btn-info">
-  {{shortDto.displayName}}</a></p></h4>
+    <a (click)="gotoProfile(shortDto?.id)" class="btn btn-info">
+  {{shortDto?.displayName}}</a></p></h4>
 </div>
 
 <ng-container *ngIf="avatarBase64Str !== undefined && avatarBase64Str.length>0">
