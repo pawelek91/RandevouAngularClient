@@ -24,85 +24,121 @@ export class UsersQueryExternalService extends ApiQueryService {
   private PutAvatarBase64 = this.PutAvatar + '/base64';
   private GetUsersAvatars = this.GetManyUsersEnd + '/Avatars/base64img';
 
-  constructor(private client: HttpClient) {
-    super();
+  constructor(client: HttpClient) {
+    super(client);
 
   }
+
   GetUser(id: number): Observable<UserDto> {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
-
     const endpoint = this.BuildAddress(this.GetUserEnd, id);
-    return this.client.get<UserDto>(endpoint, {headers: addHeaders}).pipe(map(result => {
-      return result;
-    }));
+    return this.Get<UserDto>(endpoint);
   }
+
+  // GetUser(id: number): Observable<UserDto> {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
+
+  //   const endpoint = this.BuildAddress(this.GetUserEnd, id);
+  //   return this.client.get<UserDto>(endpoint, {headers: addHeaders}).pipe(map(result => {
+  //     return result;
+  //   }));
+  // }
 
   GetUserDetails(id: number): Observable<UsersDetailsDto> {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
-
     const endpoint = this.BuildAddress(this.GetUserDetailsEnd, id);
-    return this.client.get<UsersDetailsDto>(endpoint, {headers: addHeaders}).pipe(map(result => {
-      return result;
-    }));
+    return this.Get<UsersDetailsDto>(endpoint);
   }
 
-  PatchUserBasicData(id: number, dto: UserDto) {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
+  // GetUserDetails(id: number): Observable<UsersDetailsDto> {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
 
+  //   const endpoint = this.BuildAddress(this.GetUserDetailsEnd, id);
+  //   return this.client.get<UsersDetailsDto>(endpoint, {headers: addHeaders}).pipe(map(result => {
+  //     return result;
+  //   }));
+  // }
+  PatchUserBasicData(dto: UserDto) {
     const endpoint = this.BuildAddress(this.PatchUserEnd);
-    return this.client.patch(endpoint, dto, {observe: 'response', headers: addHeaders} )
-    .pipe(map(response => {
-      if (response.ok) {
-      return true;
-      } else { return false; }
-    }));
+    return this.Patch(endpoint, dto);
   }
 
-  PutUserDetails(id: number, dto: UsersDetailsDto) {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
+  // PatchUserBasicData(id: number, dto: UserDto) {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
 
-    const endpoint = this.BuildAddress(this.PutUserDetailsEnd, id);
-    return this.client.patch(endpoint, dto, {observe: 'response', headers: addHeaders})
-    .pipe(map(result => {
-      if (result.ok) {
-        return true;
-      } else { return false; }
-    }));
-  }
+  //   const endpoint = this.BuildAddress(this.PatchUserEnd);
+  //   return this.client.patch(endpoint, dto, {observe: 'response', headers: addHeaders} )
+  //   .pipe(map(response => {
+  //     if (response.ok) {
+  //     return true;
+  //     } else { return false; }
+  //   }));
+  // }
 
-  GetManyUsers(ids: Array<number>) {
-    const apiKey = this.GetApiKey();
-    const addHeaders = new HttpHeaders().set('Authorization', apiKey)
+PutUserDetails(id: number, dto: UsersDetailsDto) {
+  const endpoint = this.BuildAddress(this.PutUserDetailsEnd, id);
+  return this.Patch(endpoint, dto);
+}
 
+  // PutUserDetails(id: number, dto: UsersDetailsDto) {
+  //   const apiKey = this.GetApiKey();
+  //   let addHeaders = new HttpHeaders();
+  //   addHeaders = addHeaders.append('Authorization', apiKey);
+
+  //   const endpoint = this.BuildAddress(this.PutUserDetailsEnd, id);
+  //   return this.client.patch(endpoint, dto, {observe: 'response', headers: addHeaders})
+  //   .pipe(map(result => {
+  //     if (result.ok) {
+  //       return true;
+  //     } else { return false; }
+  //   }));
+  // }
+
+
+  GetManyUsers(ids: Array<number>): Observable<Array<UserDto>> {
     const endpoint = this.BuildAddress(this.GetManyUsersEnd);
-    return this.client.post<Array<UserDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
-      return result;
-    }));
+    return this.Post<Array<UserDto>>(endpoint, ids);
   }
+
+  // GetManyUsers(ids: Array<number>) {
+  //   const apiKey = this.GetApiKey();
+  //   const addHeaders = new HttpHeaders().set('Authorization', apiKey)
+
+  //   const endpoint = this.BuildAddress(this.GetManyUsersEnd);
+  //   return this.client.post<Array<UserDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
+  //     return result;
+  //   }));
+  // }
 
   GetUsersAvatar(ids: Array<number>): Observable<Array<UserAvatarDto>> {
-    const apiKey = this.GetApiKey();
-    const addHeaders = new HttpHeaders().set('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.GetUsersAvatars);
-    return this.client.post<Array<UserAvatarDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
-      return result;
-    }));
+    return this.Post<Array<UserAvatarDto>>(endpoint, ids);
   }
 
+  // GetUsersAvatar(ids: Array<number>): Observable<Array<UserAvatarDto>> {
+  //   const apiKey = this.GetApiKey();
+  //   const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+  //   const endpoint = this.BuildAddress(this.GetUsersAvatars);
+  //   return this.client.post<Array<UserAvatarDto>>(endpoint, ids, {headers: addHeaders}).pipe(map(result => {
+  //     return result;
+  //   }));
+  // }
+
   SetAvatar(dto: UserAvatarDto) {
-    const apiKey = this.GetApiKey();
-    const addHeaders = new HttpHeaders().set('Authorization', apiKey);
     const endpoint = this.BuildAddress(this.PutAvatarBase64, dto.userId);
-    return this.client.put(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
-      return result;
-    }));
-   }
+    return this.Set(endpoint, dto);
+  }
+
+  // SetAvatar(dto: UserAvatarDto) {
+  //   const apiKey = this.GetApiKey();
+  //   const addHeaders = new HttpHeaders().set('Authorization', apiKey);
+  //   const endpoint = this.BuildAddress(this.PutAvatarBase64, dto.userId);
+  //   return this.client.put(endpoint, dto, {headers: addHeaders}).pipe(map(result => {
+  //     return result;
+  //   }));
+  //  }
 }

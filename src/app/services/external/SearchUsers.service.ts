@@ -11,22 +11,25 @@ import { Injectable } from '@angular/core';
 
 
 export class SearchUsersExternalService extends ApiQueryService {
-  constructor(private client: HttpClient) {
-    super();
+  constructor(client: HttpClient) {
+    super(client);
   }
    postUserFindEnd  = ApiQueryService.ApiEndpoint + '/api/UserFinder';
 
 
    SearchUsers(dto: SearchQueryDto): Observable<Array<number>> {
-    const apiKey = this.GetApiKey();
-    let addHeaders = new HttpHeaders();
-    addHeaders = addHeaders.append('Authorization', apiKey);
+    return this.Post<Array<number>>(this.postUserFindEnd, dto);
 
-    return this.client.post<Array<number>>(this.postUserFindEnd, dto, {headers: addHeaders, observe: 'response'} ).pipe(map(result => {
-        if (result.ok) {
-          return result.body;
-        }
-      }));
+    // const apiKey = this.GetApiKey();
+    // let addHeaders = new HttpHeaders();
+    // addHeaders = addHeaders.append('Authorization', apiKey);
+
+
+    // return this.client.post<Array<number>>(this.postUserFindEnd, dto, {headers: addHeaders, observe: 'response'} ).pipe(map(result => {
+    //     if (result.ok) {
+    //       return result.body;
+    //     }
+    //   }));
    }
 
 }
