@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessagesService } from '../services/message/Messages.service';
 import { LastMessageDto, MessageDto } from '../services/message/MessageDto';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { UsersService } from '../services/users/users.service';
   templateUrl: './messaging.component.html',
   styleUrls: ['./messaging.component.css']
 })
-export class MessagingComponent implements OnInit {
+export class MessagingComponent implements OnInit, OnDestroy {
 
   lastMessages: Array<LastMessageDto>;
   newMessageContent: string;
@@ -21,6 +21,8 @@ export class MessagingComponent implements OnInit {
   displayShort: boolean;
   displayShortUserId: number;
 
+  getConversationInterval: any;
+  getLastMessagesInterval: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private messagesService: MessagesService, private usersService: UsersService) {
@@ -30,6 +32,10 @@ export class MessagingComponent implements OnInit {
 
   ngOnInit() {
     this.getLastMessages();
+    this.getLastMessagesInterval = setInterval( () => {
+      this.getLastMessages();
+    }, 10000);
+
     const identity = this.route.snapshot.paramMap.get('id');
 
     if (identity === null || identity === undefined || identity.length < 1) {
@@ -38,14 +44,31 @@ export class MessagingComponent implements OnInit {
       this.displayMessageForm = true;
       this.usersService.GetUserBasic(identity).subscribe(result => {
       this.speakerDto = result;
-      this.messagesService.GetConversation(result.id).subscribe(messages => {
-        this.conversation = messages;
-      });
+
+      this.getConversationMessagess(result.id);
+      this.getConversationInterval = setInterval( () => {
+        this.getConversationMessagess(result.id);
+      }, 3000);
       });
     }
   }
 
+  getConversationMessagess(id: number){
+    this.messagesService.GetConversation(id).subscribe(messages => {
+      this.conversation = messages;
+
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.getConversationInterval) {
+      clearInterval(this.getConversationInterval);
+      clearInterval(this.getLastMessagesInterval);
+    }
+  }
+
   getLastMessages() {
+    console.log('GET');
     this.messagesService.GetLastConversations().subscribe(result => {
       this.lastMessages = result;
     }, error => {
