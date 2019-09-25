@@ -7,7 +7,7 @@ import { DictionaryItemDto } from '../common/DictionaryItemDto';
 import { Observable, fromEvent } from 'rxjs';
 import { ApiQueryService } from '../services/external/api-query.service';
 import { Router } from '@angular/router';
-import { pluck } from 'rxjs/operators';
+import { pluck, finalize } from 'rxjs/operators';
 import { NavbarService } from '../services/navbar.service';
 
 
@@ -18,6 +18,7 @@ import { NavbarService } from '../services/navbar.service';
 })
 export class MyProfileComponent implements OnInit {
 
+  dataLoaded: boolean;
   updateNotSucceded: boolean;
   userDto: UserFullDto;
   newPassword: string;
@@ -30,6 +31,7 @@ export class MyProfileComponent implements OnInit {
   interestsDict: Array<DictionaryItemDto>;
 
   constructor(private usersService: UsersService, private router: Router, public nav: NavbarService ) {
+    this.dataLoaded = false;
     this.identity = ApiQueryService.GetIdentity();
     this.nav.show();
 
@@ -77,7 +79,11 @@ export class MyProfileComponent implements OnInit {
   }
 
   getMyProfileData() {
-    this.usersService.GetUserBasic(this.identity).subscribe(result => {
+    this.usersService.GetUserBasic(this.identity).pipe(
+      finalize( () => {
+        this.dataLoaded = true;
+      })
+    ).subscribe(result => {
       this.userDto.basic = result;
       const date = new Date(this.userDto.basic.birthDate);
 

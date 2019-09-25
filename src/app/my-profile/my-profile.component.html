@@ -2,7 +2,7 @@
   Nie udało się zaktualizować profilu.
 </ng-container>
 
-
+<ng-container *ngIf="dataLoaded">
 <div class="form-group" style="height: 300px; align-content: center">
     <img src="{{myProfileAvatar}}" style="height: 80%; width: 80%; object-fit: scale-down;" >
     <br/>
@@ -115,3 +115,4 @@
 </form>
 </form>
 </div>
+</ng-container>
