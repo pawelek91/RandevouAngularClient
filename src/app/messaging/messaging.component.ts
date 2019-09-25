@@ -68,7 +68,6 @@ export class MessagingComponent implements OnInit, OnDestroy {
   }
 
   getLastMessages() {
-    console.log('GET');
     this.messagesService.GetLastConversations().subscribe(result => {
       this.lastMessages = result;
     }, error => {

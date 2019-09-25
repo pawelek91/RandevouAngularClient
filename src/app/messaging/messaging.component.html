@@ -32,15 +32,15 @@
 
 <table class="table table-striped">
     <tbody>
-        <tr *ngFor="let message of lastMessages">
+        <tr *ngFor="let message of lastMessages" style="border:1px solid gray">
             <td>
               <div>  <app-user-details-short [userId]='message.speakerId'></app-user-details-short></div>
-                <div> {{message.speakerName}}  <i>({{message.messageDate | date:'medium' }})</i></div>
+                <div><i>({{message.messageDate | date:'medium' }})</i></div>
                 <div> {{message.messageShortContent}} </div>
                 <div>
 
-                    <a  class="btn btn-info" role="button" (click)="goToConversation(message.speakerId)">
-                        Przejdź
+                    <a  class="btn btn-primary" role="button" (click)="goToConversation(message.speakerId)">
+                        Przejdź do konwersacji
                     </a>
                 </div>
             </td>
